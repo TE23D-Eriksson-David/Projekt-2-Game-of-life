@@ -1,0 +1,1 @@
+﻿using SC = System.Console;
