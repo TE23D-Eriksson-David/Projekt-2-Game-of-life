@@ -6,7 +6,14 @@ using Raylib_cs;
 
 namespace Projekt_2_Game_of_life;
 
-
+public enum Choice
+{
+    Start,
+    Stop,
+    Clear,
+    BoardInput,
+    None,
+}
 
 
 public class ButtonTemp
@@ -54,9 +61,9 @@ public class Interface
 static Vector2 PressedPosition;
 
 
+static Choice UserInput = Choice.None;
+
 public static void Draw(){
-Raylib.SetTargetFPS(30);
-Raylib.InitWindow(800, 600, "Game Of Life");
 
 ButtonTemp StartButton = new ButtonTemp() {TextContent = "Start", XStartPosition = 200, YStartPosition = 525, };
 ButtonTemp EndButton = new ButtonTemp() {TextContent = "Stop", XStartPosition = 350, YStartPosition = 525, };
@@ -64,9 +71,6 @@ ButtonTemp ClearButton = new ButtonTemp() {TextContent = "Clear", XStartPosition
 LineTemp OverBoardLine = new LineTemp() {LineStartX = 0, LineStartY = 100, LineEndY = 100, LineWidth = 15};
 LineTemp UnderBoardLine = new LineTemp() {LineStartX = 0, LineStartY = 500, LineEndY = 500, LineWidth = 15};
 
-
-while (!Raylib.WindowShouldClose())
-{
     Raylib.BeginDrawing();
 
         Raylib.ClearBackground(Color.Gray);
@@ -79,39 +83,57 @@ while (!Raylib.WindowShouldClose())
     Raylib.EndDrawing();
 
 
-
-
-
-
     if (Raylib.IsMouseButtonPressed(MouseButton.Left))
     {
         PressedPosition = Raylib.GetMousePosition();
+        SC.WriteLine(PressedPosition.X + "-X-");
+        SC.WriteLine(PressedPosition.Y + "-Y-");
 
         if (PressedPosition.X > StartButton.XStartPosition & PressedPosition.X < StartButton.XStartPosition + LenghtStartButton & PressedPosition.Y > StartButton.YStartPosition & PressedPosition.Y < StartButton.YStartPosition + StartButton.FontSize*2)
         {
-            SC.WriteLine(PressedPosition.X + "-X-");
-            SC.WriteLine(PressedPosition.Y + "-Y-");
             SC.WriteLine("StartButton");
+            UserInput = Choice.Start;
         }
         if (PressedPosition.X > EndButton.XStartPosition & PressedPosition.X < EndButton.XStartPosition + LenghtEndButton & PressedPosition.Y > EndButton.YStartPosition & PressedPosition.Y < EndButton.YStartPosition + EndButton.FontSize*2)
         {
-            SC.WriteLine(PressedPosition.X + "-X-");
-            SC.WriteLine(PressedPosition.Y + "-Y-");
             SC.WriteLine("StopButton");
+            UserInput = Choice.Stop;
         }
         if (PressedPosition.X > ClearButton.XStartPosition & PressedPosition.X < ClearButton.XStartPosition + LenghtClearButton & PressedPosition.Y > ClearButton.YStartPosition & PressedPosition.Y < ClearButton.YStartPosition + ClearButton.FontSize*2)
         {
-            SC.WriteLine(PressedPosition.X + "-X-");
-            SC.WriteLine(PressedPosition.Y + "-Y-");
             SC.WriteLine("ClearButton");
-        }        
+            UserInput = Choice.Clear;
+        }     
+        if(PressedPosition.Y > OverBoardLine.LineStartY+ OverBoardLine.LineWidth/2 & PressedPosition.Y < UnderBoardLine.LineStartY - OverBoardLine.LineWidth/2 )
+        {
+            SC.WriteLine("Board Space");
+            UserInput = Choice.BoardInput;
+        }   
 
     }
 
-    
 }
 
+public static Choice GetChoice(){
+return UserInput;
 }
+
+public static void SetChoice(Choice InChoice){
+UserInput = InChoice;
+}
+
+public static Vector2 GetMousePosition(){
+return PressedPosition;
+}
+
+
+
+
+
+
+
+
+
 
 
 
