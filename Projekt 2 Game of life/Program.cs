@@ -1,15 +1,9 @@
 ﻿using SC = System.Console;
 using Raylib_cs;
-
-
-
-Raylib.InitWindow(800, 600, "test");
-
+using Projekt_2_Game_of_life;
 
 
 
 
-while (true)
-{
+Interface.Draw();
     
-}
