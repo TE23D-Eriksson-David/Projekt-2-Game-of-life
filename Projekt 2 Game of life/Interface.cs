@@ -127,7 +127,7 @@ public class Interface
 
     public static Choice GetChoice()
     {
-        return UserInput;
+        return UserInput; 
     }
 
     public static void SetChoice(Choice InChoice)

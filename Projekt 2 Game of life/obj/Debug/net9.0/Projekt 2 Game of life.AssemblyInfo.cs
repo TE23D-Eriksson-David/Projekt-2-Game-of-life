@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Projekt 2 Game of life")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d3ed42e416a3ad8318e1ec0e769a51ab4966df4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e2765584cef33cd67f84af3875472d1cd3058d42")]
 [assembly: System.Reflection.AssemblyProductAttribute("Projekt 2 Game of life")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Projekt 2 Game of life")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
