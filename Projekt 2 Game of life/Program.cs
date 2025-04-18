@@ -5,10 +5,12 @@ using System.Numerics;
 
 Raylib.SetTargetFPS(30);
 Raylib.InitWindow(800, 600, "Game Of Life");
-Choice UserInput = Choice.None;
+Choice UserInput;
 Vector2 MousePressedPosition;
 Vector2 BoardSizeY;
 Vector2 BoardSizeX;
+
+bool CreateOnce = true;
 
 
 
@@ -17,17 +19,25 @@ while (!Raylib.WindowShouldClose())
     Interface.SetChoice(Choice.None);
     Interface.Draw();
     UserInput = Interface.GetChoice();
-    // SC.WriteLine(UserInput);
     MousePressedPosition = Interface.GetMousePosition();
-    int CellStorlek = Cell.GetSize();
     Interface.GetBoardDimentions(out BoardSizeY, out BoardSizeX);
-    // Board.Draw(BoardSizeX, BoardSizeY, CellStorlek);
 
-    if (UserInput == Choice.Start)
-    {
-        SC.WriteLine("CerateMatrix");
-        Board.CerateMatrix(BoardSizeX, BoardSizeY, CellStorlek);
-        Interface.SetChoice(Choice.None);
+    if (CreateOnce){
+        int CellSize = Cell.GetSize();
+        Board.CerateMatrix(BoardSizeX, BoardSizeY, CellSize);
+        CreateOnce = false;
     }
-    
+    Board.DrawCells();
+
+    Game_Logic.EvaluateUserImput(UserInput,MousePressedPosition);
+
 }
+
+
+
+
+
+
+
+
+// Board.Draw(BoardSizeX, BoardSizeY, CellSize);

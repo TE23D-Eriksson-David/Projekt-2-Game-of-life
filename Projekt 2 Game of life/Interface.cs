@@ -11,6 +11,7 @@ public enum Choice
     Start,
     Stop,
     Clear,
+    Instructions,
     BoardInput,
     None,
 }
@@ -79,16 +80,15 @@ public class Interface
         LineTemp UnderBoardLine = new LineTemp() { LineStartX = 0, LineStartY = UnderLineStartY, LineEndX = Raylib.GetScreenWidth(), LineEndY = 500, LineWidth = LineWidth };
 
 
-
         Raylib.BeginDrawing();
 
-        Raylib.ClearBackground(Color.Gray);
-        OverBoardLine.Create();
-        UnderBoardLine.Create();
-        int LenghtStartButton = StartButton.Create();
-        int LenghtEndButton = EndButton.Create();
-        int LenghtClearButton = ClearButton.Create();
-        Raylib.DrawText("The Game Of Life", 20,20, 60, Color.Black);
+            Raylib.ClearBackground(Color.Gray);
+            OverBoardLine.Create();
+            UnderBoardLine.Create();
+            int LenghtStartButton = StartButton.Create();
+            int LenghtEndButton = EndButton.Create();
+            int LenghtClearButton = ClearButton.Create();
+            Raylib.DrawText("The Game Of Life", 20, 20, 60, Color.Black);
 
         Raylib.EndDrawing();
 
@@ -127,7 +127,7 @@ public class Interface
 
     public static Choice GetChoice()
     {
-        return UserInput; 
+        return UserInput;
     }
 
     public static void SetChoice(Choice InChoice)
@@ -142,18 +142,11 @@ public class Interface
 
     public static void GetBoardDimentions(out Vector2 YSize, out Vector2 XSize)
     {
-        YSize.X = OverLineStartY + LineWidth/2;
-        YSize.Y = UnderLineStartY - LineWidth/2;
+        YSize.X = OverLineStartY + LineWidth / 2;
+        YSize.Y = UnderLineStartY - LineWidth / 2;
 
         XSize.X = LineBeginingX;
         XSize.Y = LineEndingX;
     }
-
-
-
-
-
-
-
 
 }
