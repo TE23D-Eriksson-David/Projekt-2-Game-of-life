@@ -3,9 +3,10 @@ using Raylib_cs;
 using Projekt_2_Game_of_life;
 using System.Numerics;
 
-Raylib.SetTargetFPS(30);
+Raylib.SetTargetFPS(60);
 Raylib.InitWindow(800, 600, "Game Of Life");
 Choice UserInput;
+SimulationState State = SimulationState.None;
 Vector2 MousePressedPosition;
 Vector2 BoardSizeY;
 Vector2 BoardSizeX;
@@ -24,12 +25,15 @@ while (!Raylib.WindowShouldClose())
 
     if (CreateOnce){
         int CellSize = Cell.GetSize();
-        Board.CerateMatrix(BoardSizeX, BoardSizeY, CellSize);
+        Board.CreateMatrix(BoardSizeX, BoardSizeY, CellSize);
         CreateOnce = false;
     }
-    Board.DrawCells();
+    Board.DrawMatrix(State);
 
-    Game_Logic.EvaluateUserImput(UserInput,MousePressedPosition);
+    State = Game_Logic.EvaluateUserInput(UserInput,MousePressedPosition);
+    Simulation_Rules.Run(State);
+
+    Board.DrawNextMatrix(State);
 
 }
 

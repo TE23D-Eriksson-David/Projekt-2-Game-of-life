@@ -1,26 +1,38 @@
 using SC = System.Console;
 using System.Numerics;
-
 namespace Projekt_2_Game_of_life;
+
+
+public enum SimulationState
+{
+    Runing,
+    Stop,
+    None,
+}
+
 
 public class Game_Logic
 {
 
 
-    public static void EvaluateUserImput(Choice UserInput, Vector2 MousePressedPosition)
+static SimulationState State = SimulationState.None;
+
+    public static SimulationState EvaluateUserInput(Choice UserInput, Vector2 MousePressedPosition)
     {
 
         switch (UserInput)
         {
             case Choice.BoardInput:
+            if (State != SimulationState.Runing){
                 SC.WriteLine("BoardIn");
                 ChangeCellState(MousePressedPosition);
+            }
                 break;
             case Choice.Start:
-                Simulation_Rules.Run();
+                State = SimulationState.Runing;
                 break;
             case Choice.Stop:
-                // Stop simulation
+                State = SimulationState.Stop;
                 break;
             case Choice.Clear:
                 ClearBoard();
@@ -29,13 +41,14 @@ public class Game_Logic
                 // skappa en rutta som täker skärmen och inaktiverar alla knappar, förutom den för att stänga istructionerna.
                 break;
         }
+        return State;
     }
 
 
     public static void ChangeCellState(Vector2 MousePressedPosition)
     {
 
-        foreach (List<Cell> List in Board.CellMatrix)
+        foreach (List<Cell> List in Board.CellCurenMatrix)
         {
             foreach (Cell Instence in List)
             {
@@ -67,7 +80,7 @@ public class Game_Logic
     public static void ClearBoard()
     {
 
-        foreach (List<Cell> List in Board.CellMatrix)
+        foreach (List<Cell> List in Board.CellCurenMatrix)
         {
             foreach (Cell Instence in List)
             {
