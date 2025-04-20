@@ -15,7 +15,7 @@ public class Game_Logic
 {
 
 
-static SimulationState State = SimulationState.None;
+    static SimulationState State = SimulationState.None;
 
     public static SimulationState EvaluateUserInput(Choice UserInput, Vector2 MousePressedPosition)
     {
@@ -23,10 +23,11 @@ static SimulationState State = SimulationState.None;
         switch (UserInput)
         {
             case Choice.BoardInput:
-            if (State != SimulationState.Runing){
-                SC.WriteLine("BoardIn");
-                ChangeCellState(MousePressedPosition);
-            }
+                if (State != SimulationState.Runing)
+                {
+                    SC.WriteLine("BoardIn");
+                    ChangeCellState(MousePressedPosition);
+                }
                 break;
             case Choice.Start:
                 State = SimulationState.Runing;

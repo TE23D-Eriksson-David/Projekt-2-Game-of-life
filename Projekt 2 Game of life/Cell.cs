@@ -11,7 +11,7 @@ public class Cell
     {
         Dead,
         Alive
-        
+
     }
     CellState State = CellState.Dead;
 

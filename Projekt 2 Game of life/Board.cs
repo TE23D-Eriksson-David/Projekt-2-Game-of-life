@@ -17,11 +17,11 @@ public class Board
 
 
 
-    public static void DrawMatrix(SimulationState CurentState)
+    public static void DrawMatrix()
     {
 
         int CellSize = Cell.GetSize();
-        Rectangle r1 = new Rectangle(0, 0, CellSize, CellSize);      
+        Rectangle r1 = new Rectangle(0, 0, CellSize, CellSize);
 
         foreach (List<Cell> List in CellCurenMatrix)
         {
@@ -61,7 +61,7 @@ public class Board
         {
             CellCurenMatrix.Add(new List<Cell>());
             CellNextMatrix.Add(new List<Cell>());
-            ColumnCells = 0;  
+            ColumnCells = 0;
             for (r1.X = BoardSizeX.X; r1.X < BoardSizeX.Y - CellSpace; r1.X += CellSpace)
             {
                 Cell CurentMatrixCell = new Cell();
@@ -87,47 +87,69 @@ public class Board
 
 
 
-
-
-
-
-
-
-
-public static void DrawNextMatrix(SimulationState State)
+    public static void DrawNextMatrix(SimulationState State)
     {
         if (State == SimulationState.Runing)
         {
 
-        int CellSize = Cell.GetSize();
-        Rectangle r1 = new Rectangle(0, 0, CellSize, CellSize);
-        
-        foreach (List<Cell> List in CellNextMatrix)
-        {
-            foreach (Cell Instence in List)
+            int CellSize = Cell.GetSize();
+            Rectangle r1 = new Rectangle(0, 0, CellSize, CellSize);
+
+            foreach (List<Cell> List in CellNextMatrix)
             {
-
-                Cell.CellState Stat = Instence.GetState();
-                r1.X = Instence.GetXPos();
-                r1.Y = Instence.GetYPos();
-                Color CellCollor = Color.DarkGreen;
-
-                switch (Stat)
+                foreach (Cell Instence in List)
                 {
-                    case Cell.CellState.Alive:
-                        CellCollor = Color.White;
-                        break;
-                    case Cell.CellState.Dead:
-                        CellCollor = Color.Beige;
-                        break;
+
+                    Cell.CellState Stat = Instence.GetState();
+                    r1.X = Instence.GetXPos();
+                    r1.Y = Instence.GetYPos();
+                    Color CellCollor = Color.DarkGreen;
+
+                    switch (Stat)
+                    {
+                        case Cell.CellState.Alive:
+                            CellCollor = Color.White;
+                            break;
+                        case Cell.CellState.Dead:
+                            CellCollor = Color.Beige;
+                            break;
+                    }
+
+                    Raylib.DrawRectangleRec(r1, CellCollor);
+
                 }
-
-                Raylib.DrawRectangleRec(r1, CellCollor);
-
             }
-        }
         }
 
 
     }
+
+
+    public static void UpdateMatrix(SimulationState State)
+    {
+
+        if (State == SimulationState.Runing)
+        {
+            for (int y = 0; y < RowCells - 1; y++)
+            {
+                for (int x = 0; x < ColumnCells - 1; x++)
+                {
+                    Cell.CellState state = CellNextMatrix[y][x].GetState();
+                    CellCurenMatrix[y][x].SetState(state);
+                }
+            }
+        }
+
+    }
+
+
+
 }
+
+
+
+
+
+
+
+

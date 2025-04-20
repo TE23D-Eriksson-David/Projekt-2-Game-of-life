@@ -23,17 +23,21 @@ while (!Raylib.WindowShouldClose())
     MousePressedPosition = Interface.GetMousePosition();
     Interface.GetBoardDimentions(out BoardSizeY, out BoardSizeX);
 
-    if (CreateOnce){
+    if (CreateOnce)
+    {
         int CellSize = Cell.GetSize();
         Board.CreateMatrix(BoardSizeX, BoardSizeY, CellSize);
         CreateOnce = false;
     }
-    Board.DrawMatrix(State);
+    Board.DrawMatrix();
 
-    State = Game_Logic.EvaluateUserInput(UserInput,MousePressedPosition);
+    State = Game_Logic.EvaluateUserInput(UserInput, MousePressedPosition);
     Simulation_Rules.Run(State);
 
-    Board.DrawNextMatrix(State);
+    Board.UpdateMatrix(State);
+    Thread.Sleep(50);
+
+    // Board.DrawNextMatrix(State);
 
 }
 

@@ -11,7 +11,7 @@ public class Simulation_Rules
 
     public static void Run(SimulationState Condition)
     {
-        
+
         if (Condition == SimulationState.Runing)
         {
 
@@ -31,13 +31,14 @@ public class Simulation_Rules
                                 continue;
 
 
-                            if (Listor + y <= Board.RowCells-1 && Listor + y >= 0)
+                            if (Listor + y <= Board.RowCells - 1 && Listor + y >= 0)
                             {
-                                if (Celler + x <= Board.ColumnCells-1 && Celler + x >= 0){
+                                if (Celler + x <= Board.ColumnCells - 1 && Celler + x >= 0)
+                                {
                                     CurentCellState = Board.CellCurenMatrix[Listor + y][Celler + x].GetState();
-                                
-                                if (CurentCellState == Cell.CellState.Alive)
-                                AliveCloseCells++;
+
+                                    if (CurentCellState == Cell.CellState.Alive)
+                                        AliveCloseCells++;
                                 }
                             }
 
@@ -70,6 +71,8 @@ public class Simulation_Rules
             }
         }
     }
+
+
 
 
 
