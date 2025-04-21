@@ -1,6 +1,3 @@
-using System;
-using Raylib_cs;
-
 namespace Projekt_2_Game_of_life;
 
 public class Cell
@@ -11,8 +8,8 @@ public class Cell
     {
         Dead,
         Alive
-
     }
+
     CellState State = CellState.Dead;
 
     float Xposition;
@@ -22,49 +19,36 @@ public class Cell
 
 
 
-
-
-
-
-
-    public static int GetSize()
-    {
+    public static int GetSize(){
         return Size;
     }
 
-    public CellState GetState()
-    {
+    public CellState GetState(){
         return State;
     }
 
-    public void SetState(CellState NewState)
-    {
-        State = NewState;
+    public void SetState(CellState NewState){
+        State = NewState; // Sätter om den lever eller om den är död.
     }
 
-    public void SetSize(int NewSize)
-    {
+    public void SetSize(int NewSize){
         Size = NewSize;
     }
 
-    public void SetXPos(float NewPos)
-    {
+    public void SetXPos(float NewPos){
         Xposition = NewPos;
     }
 
-    public void SetYPos(float NewPos)
-    {
+    public void SetYPos(float NewPos){
         YPosition = NewPos;
     }
 
-    public float GetXPos()
-    {
+    public float GetXPos(){
         return Xposition;
     }
 
-    public float GetYPos()
-    {
+    public float GetYPos(){
         return YPosition;
     }
 
-}
+} // END OF CLASS

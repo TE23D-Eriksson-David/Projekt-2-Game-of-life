@@ -1,11 +1,9 @@
-using SC = System.Console;
 using System.Numerics;
 namespace Projekt_2_Game_of_life;
 
 
-public enum SimulationState
-{
-    Runing,
+public enum SimulationState{
+    Running,
     Stop,
     None,
 }
@@ -13,33 +11,29 @@ public enum SimulationState
 
 public class Game_Logic
 {
-
-
     static SimulationState State = SimulationState.None;
 
     public static SimulationState EvaluateUserInput(Choice UserInput, Vector2 MousePressedPosition)
-    {
+    { // tar in vart & vad användaren trök på och utför korisponderande resultat.
 
         switch (UserInput)
         {
             case Choice.BoardInput:
-                if (State != SimulationState.Runing)
-                {
-                    SC.WriteLine("BoardIn");
-                    ChangeCellState(MousePressedPosition);
+                if (State != SimulationState.Running){
+                    ChangeCellState(MousePressedPosition); // Ändrar cellens state på musens positions.
                 }
                 break;
             case Choice.Start:
-                State = SimulationState.Runing;
+                State = SimulationState.Running; // ändrar state så när vi faller ur till den större loopen så körs simulationen.
                 break;
-            case Choice.Stop:
-                State = SimulationState.Stop;
+            case Choice.Stop: 
+                State = SimulationState.Stop; // Stoppar simulationen om den körs.
                 break;
             case Choice.Clear:
-                ClearBoard();
+                ClearBoard(); // Sätter alla celler till döda
                 break;
             case Choice.Instructions:
-                // skappa en rutta som täker skärmen och inaktiverar alla knappar, förutom den för att stänga istructionerna.
+                Interface.PromptInstructionWindow(); // ritar upp ett fönster med instructioner.
                 break;
         }
         return State;
@@ -47,8 +41,8 @@ public class Game_Logic
 
 
     public static void ChangeCellState(Vector2 MousePressedPosition)
-    {
-
+    { // komplicerad metod som kollar på varge cell i den 2d listan och jämför muspositionen om den är 
+        // inanför cellens ramar och sedan sätter dens state till motsatsen av vad den redan är.
         foreach (List<Cell> List in Board.CellCurenMatrix)
         {
             foreach (Cell Instence in List)
@@ -78,7 +72,7 @@ public class Game_Logic
 
 
 
-    public static void ClearBoard()
+    public static void ClearBoard() // går igenom varge cell och sätter dem till döda.
     {
 
         foreach (List<Cell> List in Board.CellCurenMatrix)

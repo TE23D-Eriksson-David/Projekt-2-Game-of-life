@@ -1,33 +1,32 @@
 using SC = System.Console;
 using System.Numerics;
-using System.Security.Cryptography;
-using System.Security.Principal;
 using Raylib_cs;
 
 namespace Projekt_2_Game_of_life;
 
-public enum Choice
+public enum Choice // Velen/knapparna som spelaren kan tryka.
 {
     Start,
     Stop,
     Clear,
     Instructions,
+    CloseInstructions,
     BoardInput,
     None,
 }
 
 
-public class ButtonTemp
+public class ButtonTemplate // Knapp mallen 
 {
     public int XStartPosition = 1;
     public int YStartPosition = 2;
-    public string TextContent = "You forgot to change this!!";
-    public int FontSize = 600 / 30;
-
+    public string TextContent = "Reminder if you forget to change this!!";
+    public int FontSize = Raylib.GetScreenHeight() / 30;
     Rectangle Rec;
 
-    public int Create()
-    {
+
+    public int Create() // Skappa knappen med text. Bakgrunden/Storleken i x led beräknas genom att ta karaktärerna
+    {   // I strängen och muliplicera med storleken vilket blir jätte konstigt med långa ord och borde tänkas om.
         int RecLenght = TextContent.Length * FontSize;
         Rec = new Rectangle(XStartPosition, YStartPosition, RecLenght, FontSize * 2);
         Raylib.DrawRectangleRec(Rec, Color.Blue);
@@ -36,7 +35,7 @@ public class ButtonTemp
     }
 }
 
-public class LineTemp
+public class LineTemplate // Linije mallen vilket är ganska onödig 
 {
     public int LineWidth = 20;
     public int LineEndY = 0;
@@ -59,84 +58,112 @@ public class LineTemp
 
 
 
-public class Interface
+public class Interface // Hanterar vad som ska ritas utt på fönstret och användarens input.
 {
 
     static Vector2 PressedPosition;
     static Choice UserInput = Choice.None;
-    static int OverLineStartY = Raylib.GetScreenHeight() / 6;
-    static int UnderLineStartY = 500; //Raylib.GetScreenHeight()/(6/5);
+    static int OverLineStartY = Raylib.GetScreenHeight() / 6; // Positionen för linijernas höjd
+    static int UnderLineStartY = Raylib.GetScreenHeight() * 5 / 6;
     static int LineBeginingX = 0;
     static int LineEndingX = Raylib.GetScreenWidth();
     static int LineWidth = 12;
 
-    public static void Draw()
+    public static void Draw() // RIIIIIITAR
     {
-
-        ButtonTemp StartButton = new ButtonTemp() { TextContent = "Start", XStartPosition = 200, YStartPosition = 525, };
-        ButtonTemp EndButton = new ButtonTemp() { TextContent = "Stop", XStartPosition = 350, YStartPosition = 525, };
-        ButtonTemp ClearButton = new ButtonTemp() { TextContent = "Clear", XStartPosition = 500, YStartPosition = 525, };
-        LineTemp OverBoardLine = new LineTemp() { LineStartX = 0, LineStartY = OverLineStartY, LineEndX = Raylib.GetScreenWidth(), LineEndY = OverLineStartY, LineWidth = LineWidth };
-        LineTemp UnderBoardLine = new LineTemp() { LineStartX = 0, LineStartY = UnderLineStartY, LineEndX = Raylib.GetScreenWidth(), LineEndY = 500, LineWidth = LineWidth };
-
-
-        Raylib.BeginDrawing();
-
-            Raylib.ClearBackground(Color.Gray);
-            OverBoardLine.Create();
-            UnderBoardLine.Create();
-            int LenghtStartButton = StartButton.Create();
-            int LenghtEndButton = EndButton.Create();
-            int LenghtClearButton = ClearButton.Create();
-            Raylib.DrawText("The Game Of Life", 20, 20, 60, Color.Black);
-
-        Raylib.EndDrawing();
+        // Skappar instncer av knapparna och linijerna som rittas ut.
+        ButtonTemplate StartButton = new ButtonTemplate() { TextContent = "Start", XStartPosition = 100, YStartPosition = 525, };
+        ButtonTemplate EndButton = new ButtonTemplate() { TextContent = "Stop", XStartPosition = 250, YStartPosition = 525, };
+        ButtonTemplate ClearButton = new ButtonTemplate() { TextContent = "Clear", XStartPosition = 400, YStartPosition = 525, };
+        ButtonTemplate InstructionsButton = new ButtonTemplate() { TextContent = "Instructions", XStartPosition = 550, YStartPosition = 525, };
+        LineTemplate OverBoardLine = new LineTemplate() { LineStartX = 0, LineStartY = OverLineStartY, LineEndX = Raylib.GetScreenWidth(), LineEndY = OverLineStartY, LineWidth = LineWidth };
+        LineTemplate UnderBoardLine = new LineTemplate() { LineStartX = 0, LineStartY = UnderLineStartY, LineEndX = Raylib.GetScreenWidth(), LineEndY = 500, LineWidth = LineWidth };
 
 
-        if (Raylib.IsMouseButtonPressed(MouseButton.Left))
-        {
+        Raylib.BeginDrawing(); // Ritt tiden =)
+
+        Raylib.ClearBackground(Color.Gray);
+        OverBoardLine.Create();
+        UnderBoardLine.Create();
+        int LenghtStartButton = StartButton.Create();
+        int LenghtEndButton = EndButton.Create();   // Hämtar slut x på knapparna 
+        int LenghtClearButton = ClearButton.Create();
+        int LenghtInstructionsButton = InstructionsButton.Create();
+        Raylib.DrawText("The Game Of Life", 20, 20, 60, Color.Black);
+
+        Raylib.EndDrawing(); // Slut på ritt tiden =( 
+
+
+        if (Raylib.IsMouseButtonPressed(MouseButton.Left)) // kollar om mussen tryks ner sedan vart
+        {   // Om den är inom en av områderna nedan så ändras enumet för anvädarens val.
             PressedPosition = Raylib.GetMousePosition();
-            SC.WriteLine(PressedPosition.X + "-X-");
-            SC.WriteLine(PressedPosition.Y + "-Y-");
 
             if (PressedPosition.X > StartButton.XStartPosition & PressedPosition.X < StartButton.XStartPosition + LenghtStartButton & PressedPosition.Y > StartButton.YStartPosition & PressedPosition.Y < StartButton.YStartPosition + StartButton.FontSize * 2)
-            {
-                SC.WriteLine("StartButton");
                 UserInput = Choice.Start;
-            }
+
             if (PressedPosition.X > EndButton.XStartPosition & PressedPosition.X < EndButton.XStartPosition + LenghtEndButton & PressedPosition.Y > EndButton.YStartPosition & PressedPosition.Y < EndButton.YStartPosition + EndButton.FontSize * 2)
-            {
-                SC.WriteLine("StopButton");
                 UserInput = Choice.Stop;
-            }
+
             if (PressedPosition.X > ClearButton.XStartPosition & PressedPosition.X < ClearButton.XStartPosition + LenghtClearButton & PressedPosition.Y > ClearButton.YStartPosition & PressedPosition.Y < ClearButton.YStartPosition + ClearButton.FontSize * 2)
-            {
-                SC.WriteLine("ClearButton");
                 UserInput = Choice.Clear;
-            }
+
+            if (PressedPosition.X > InstructionsButton.XStartPosition & PressedPosition.X < InstructionsButton.XStartPosition + LenghtInstructionsButton & PressedPosition.Y > InstructionsButton.YStartPosition & PressedPosition.Y < InstructionsButton.YStartPosition + InstructionsButton.FontSize * 2)
+                UserInput = Choice.Instructions;
+
             if (PressedPosition.Y > OverBoardLine.LineStartY + OverBoardLine.LineWidth / 2 & PressedPosition.Y < UnderBoardLine.LineStartY - OverBoardLine.LineWidth / 2)
-            {
-                SC.WriteLine("Board Space");
                 UserInput = Choice.BoardInput;
-            }
 
         }
 
     }
 
 
-    public static Choice GetChoice()
-    {
+    public static void PromptInstructionWindow() // EN egen metod för att rita utt instruktions rutan.
+    {   // Väldigt lång instruktion som jag inte orkade skriva själv ChatGPT =)
+        string VeryLongTextContent = "Conway's Game of Life is a grid-based \nsimulation where cells live or die based \non simple rules. Each cell checks its 8 \nneighbors: It lives on with 2 or 3 neighbors,\nDies from loneliness or overcrowding,\nA dead cell is reborn with exactly 3 neighbors\nYou can click to toggle cells, press run\nto simulate, stop to stop simulating, and clear to \nclear the grid. There's no goal — just \npatterns that grow, move, or fade. It's a \nsandbox where complexity emerges \nfrom simplicity.";
+
+        ButtonTemplate CloseInstructionsButton = new ButtonTemplate() { TextContent = "Close", XStartPosition = 640, YStartPosition = 60, };
+
+        while (UserInput == Choice.Instructions) // Så länge användaren inte trykt på stäng knappen
+        {
+            Raylib.BeginDrawing(); // Rittar ut rutan med text och stäng knappen.
+
+                Raylib.DrawRectangle(50, 50, 700, 500, Color.LightGray);
+                Rectangle r2 = new Rectangle(50, 50, 700, 500);
+                Raylib.DrawRectangleLinesEx(r2, 5, Color.Black);
+                int LenghtCloseInstructionButton = CloseInstructionsButton.Create();
+                Raylib.DrawText("Istructioner", 80, 70, 40, Color.White);
+                Raylib.DrawText(VeryLongTextContent, 80, 125, 28, Color.White);
+
+            Raylib.EndDrawing();
+
+            if (Raylib.IsMouseButtonPressed(MouseButton.Left)) // Kollar om musen är ned trykt sedan om knappen tryktes.
+            {
+                PressedPosition = Raylib.GetMousePosition();
+                if (PressedPosition.X > CloseInstructionsButton.XStartPosition & PressedPosition.X < CloseInstructionsButton.XStartPosition + LenghtCloseInstructionButton & PressedPosition.Y > CloseInstructionsButton.YStartPosition & PressedPosition.Y < CloseInstructionsButton.YStartPosition + CloseInstructionsButton.FontSize * 2)
+                    UserInput = Choice.CloseInstructions;
+            }
+
+            if (Raylib.WindowShouldClose()) // Gör så att man kan stänga fönstret 
+            { // Gör så att den går ur whille loppen och sedan stänger.
+                UserInput = Choice.CloseInstructions;
+            }
+
+        }
+
+
+    }
+
+
+    public static Choice GetChoice(){
         return UserInput;
     }
 
-    public static void SetChoice(Choice InChoice)
-    {
+    public static void SetChoice(Choice InChoice){
         UserInput = InChoice;
     }
 
-    public static Vector2 GetMousePosition()
-    {
+    public static Vector2 GetMousePosition(){
         return PressedPosition;
     }
 
