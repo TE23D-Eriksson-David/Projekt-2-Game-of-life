@@ -1,10 +1,11 @@
 ﻿using Raylib_cs;
 using Projekt_2_Game_of_life;
 using System.Numerics;
+using SC = System.Console;
 
 Raylib.SetTargetFPS(60);
 Raylib.InitWindow(800, 600, "Game Of Life");
-Console.Title = "My window";
+SC.Title = "My window";
 
 Choice UserInput; // enum för spellarens vall
 SimulationState State; // enum om simulationen körs
@@ -31,10 +32,14 @@ while (!Raylib.WindowShouldClose())
 
     Board.DrawMatrix(); // Rita utt Brädet/Matrixen
 
-    State = Game_Logic.EvaluateUserInput(UserInput, MousePressedPosition); // Utför beslutet som spellarn har fattat och returnar statet för simulationen.
+    State = Game_Logic.EvaluateUserInput(UserInput, MousePressedPosition, out CreateOnce); // Utför beslutet som spellarn har fattat och returnar statet för simulationen.
     Simulation_Rules.Run(State); // Kör simulationen enligt statet och för in resultatet i nästa matrix.
 
     Board.UpdateMatrix(State); // För in nästa matrix i nuvarande, görs bara om simulationen körs.
     Thread.Sleep(50); // Liten delay på en 20 dels sekund
 
 }
+
+
+
+

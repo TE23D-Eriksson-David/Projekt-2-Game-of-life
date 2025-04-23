@@ -13,8 +13,9 @@ public class Game_Logic
 {
     static SimulationState State = SimulationState.None;
 
-    public static SimulationState EvaluateUserInput(Choice UserInput, Vector2 MousePressedPosition)
+    public static SimulationState EvaluateUserInput(Choice UserInput, Vector2 MousePressedPosition, out bool CreateOnce)
     { // tar in vart & vad användaren trök på och utför korisponderande resultat.
+        CreateOnce = false;
 
         switch (UserInput)
         {
@@ -34,7 +35,13 @@ public class Game_Logic
                 break;
             case Choice.Instructions:
                 Interface.PromptInstructionWindow(); // ritar upp ett fönster med instructioner.
+                if (Interface.EntetySizeRecalibration == true){
+                    CreateOnce = true;
+                }
                 break;
+            case Choice.AdjustWindowSize:
+                Interface.PromptAjdustingWindow();
+            break;
         }
         return State;
     }

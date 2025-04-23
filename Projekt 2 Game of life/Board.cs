@@ -1,14 +1,16 @@
 using System.Numerics;
-using SC = System.Console;
 using Raylib_cs;
 
 namespace Projekt_2_Game_of_life;
 
 public class Board
 {
-
+    // Min aledning för varför jag använder listor istället för arrayer är för att jag tror man inte kan skappa en
+    // 2D array med obejekt i sig. Jag kunde kanshe ha gjort det med en array men när jag skrev min metod tänkte jag 
+    // att jag behövde skappa lägga in cellerna när jag skappade dem och de var så längden av listan bestämdes vilket
+    // Inte skulle fungerat med en array.
     public static List<List<Cell>> CellCurenMatrix = new List<List<Cell>>(); // Mina två dimetionela listor
-    public static List<List<Cell>> CellNextMatrix = new List<List<Cell>>();
+    public static List<List<Cell>> CellNextMatrix = new List<List<Cell>>(); 
     public static int ColumnCells = 0;
     public static int RowCells = 0;
 
