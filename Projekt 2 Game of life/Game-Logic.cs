@@ -34,13 +34,13 @@ public class Game_Logic
                 ClearBoard(); // Sätter alla celler till döda
                 break;
             case Choice.Instructions:
-                Interface.PromptInstructionWindow(); // ritar upp ett fönster med instructioner.
-                if (Interface.EntetySizeRecalibration == true){
-                    CreateOnce = true;
-                }
+            Interface.PromptInstructionWindow(); // ritar upp ett fönster med instructioner.
                 break;
             case Choice.AdjustWindowSize:
                 Interface.PromptAjdustingWindow();
+                if ( Interface.EntetySizeRecalibration == true){
+                    CreateOnce = true;
+                }
             break;
         }
         return State;

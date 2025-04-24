@@ -173,7 +173,7 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
 
 
 
-    public static bool EntetySizeRecalibration;
+    public static bool EntetySizeRecalibration = false;
     public static bool Close = false;
     public static string StringUserInput = "";
     public static string ErrorMesage = "";

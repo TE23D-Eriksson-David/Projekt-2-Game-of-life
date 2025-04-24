@@ -25,6 +25,7 @@ while (!Raylib.WindowShouldClose())
     Interface.GetBoardDimentions(out BoardSizeY, out BoardSizeX);  // Hämtar ramens inskrivnings kordinater, beroende på de övre och undre linijerna.
 
     if (CreateOnce){ // Görs en gång
+        SC.WriteLine("do");
         int CellSize = Cell.GetSize(); // hämtar storleken på cellen
         Board.CreateMatrix(BoardSizeX, BoardSizeY, CellSize); // Skappar de två matrixerna 2dListor.
         CreateOnce = false;

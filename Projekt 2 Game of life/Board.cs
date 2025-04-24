@@ -56,6 +56,8 @@ public class Board
         Rectangle RectangleTemplate = new Rectangle(0, 0, CellSize, CellSize);
         CellCurenMatrix.Clear(); // Om listan redan är full så måste den tömas anars problem.
         CellNextMatrix.Clear(); // Deta görs för att skärmstorleken kan ändras.
+        ColumnCells = 0;
+        RowCells = 0;
 
         for (RectangleTemplate.Y = BoardSizeY.X; RectangleTemplate.Y < BoardSizeY.Y; RectangleTemplate.Y += CellSpace)
         { // Inom ramarna för det två linijerna i yled, görs till en cell som skappas har des slut y position utanför den svarat linijen.
