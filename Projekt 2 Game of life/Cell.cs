@@ -31,7 +31,7 @@ public class Cell
         State = NewState; // Sätter om den lever eller om den är död.
     }
 
-    public void SetSize(int NewSize){
+    public static void SetSize(int NewSize){
         Size = NewSize;
     }
 

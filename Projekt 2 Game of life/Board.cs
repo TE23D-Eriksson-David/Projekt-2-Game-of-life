@@ -48,11 +48,14 @@ public class Board
 
     }
 
+ 
 
     public static void CreateMatrix(Vector2 BoardSizeX, Vector2 BoardSizeY, int CellSize)
     { // Skappar mina celler och lägger in dem i mina två listor.
         int CellSpace = Cell.Space; // mellanrumet mellan cellerna.
         Rectangle RectangleTemplate = new Rectangle(0, 0, CellSize, CellSize);
+        CellCurenMatrix.Clear(); // Om listan redan är full så måste den tömas anars problem.
+        CellNextMatrix.Clear(); // Deta görs för att skärmstorleken kan ändras.
 
         for (RectangleTemplate.Y = BoardSizeY.X; RectangleTemplate.Y < BoardSizeY.Y; RectangleTemplate.Y += CellSpace)
         { // Inom ramarna för det två linijerna i yled, görs till en cell som skappas har des slut y position utanför den svarat linijen.

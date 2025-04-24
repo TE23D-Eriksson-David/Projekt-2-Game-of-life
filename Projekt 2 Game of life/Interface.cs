@@ -21,7 +21,7 @@ public class ButtonTemplate // Knapp mallen
     public int XStartPosition = 0;
     public int YStartPosition = 0;
     public string TextContent = "Reminder if you forget to change this!!";
-    public int FontSize = Raylib.GetScreenHeight() / 30;
+    public int FontSize = Raylib.GetScreenWidth() / 40;
     Rectangle Rec;
 
 
@@ -136,7 +136,7 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
         // Väldigt lång instruktion som jag inte orkade skriva själv ChatGPT =)
         string VeryLongTextContent = "Conway's Game of Life is a grid-based \nsimulation where cells live or die based \non simple rules. Each cell checks its 8 \nneighbors: It lives on with 2 or 3 neighbors,\nDies from loneliness or overcrowding,\nA dead cell is reborn with exactly 3 neighbors\nYou can click to toggle cells, press run\nto simulate, stop to stop simulating, and clear \nto clear the grid. There's no goal — just \npatterns that grow, move, or fade. It's a \nsandbox where complexity emerges \nfrom simplicity.";
 
-        ButtonTemplate CloseInstructionsButton = new ButtonTemplate() { TextContent = "Close", XStartPosition = (WindowWidth/4)*3 + (WindowWidth/40) *3, YStartPosition = WindowHeight/15, };
+        ButtonTemplate CloseInstructionsButton = new ButtonTemplate() { TextContent = "Close", XStartPosition = (WindowWidth/8)*6 + (WindowWidth/20), YStartPosition = WindowHeight/12, };
 
         while (UserInput == Choice.Instructions) // Så länge användaren inte trykt på stäng knappen
         {
@@ -225,7 +225,7 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
             Rectangle r2 = new Rectangle(0, 0, WindowWidth, WindowHeight);
             Raylib.DrawRectangleLinesEx(r2, 10, Color.Black);
 
-            Raylib.DrawText("Här kan du ändra stroleken på skärmen genom att \nskriva den storleken som du vill ha i x och y led! \nDet finns bara två restriktioner. 1. Formatet för din \ninput måste se utt på deta sätt tex '800x800' med \nett x imellan bräden och höjden. 2. Skärmstorlekn få \ninte överstiga 1000x1000 eller understiga 400x400 \nanars får jag problem. Du kan skriva genom att tryka \npå tangenterna och ta bort med baksteg, för att \nsedan bekräfta/submita din storlek tryker du på \nEnter! ", 30, 100, 28, Color.White);
+            Raylib.DrawText("Här kan du ändra stroleken på skärmen genom att \nskriva den storleken som du vill ha i x och y led! \nDet finns bara två restriktioner. 1. Formatet för din \ninput måste se utt på deta sätt tex orginal storleken \n'800x600' med ett x imellan bräden och höjden. \n2. Skärmstorlekn få inte överstiga 1000x1000 eller \nunderstiga 400x400 annars får jag problem. Du kan \nskriva genom att tryka på tangenterna och ta bort \nmed baksteg, för att sedan bekräfta/submita din \nstorlek tryker du på Enter! ", (WindowWidth/80)*3, WindowHeight/6, (WindowWidth/200)*7, Color.White);
             Raylib.DrawText("Skärm Storleks Ändraren", (WindowWidth/80)*3, WindowHeight/20, (WindowWidth/160)*11, Color.White);
             Raylib.DrawText($"Enter size: {StringUserInput}", (WindowWidth/80)*3, (WindowHeight/6)*5, (WindowWidth/20), Color.White);
             Vector2 StartLinePos = new Vector2((WindowWidth/80)*3,  (WindowHeight/6)*5 + WindowWidth/15 - WindowWidth/100); Vector2 EndLinePos = new Vector2(WindowWidth/2 + (WindowWidth/40)*3, (WindowHeight/6)*5 + WindowWidth/15 - WindowWidth/100);
@@ -233,7 +233,7 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
 
             if (ErrorMesage.Length != 0) // Skriver bara utt om det finns något i.
             {
-                Raylib.DrawText(ErrorMesage, (WindowWidth/80)*3, (WindowWidth/3)*2 + (WindowHeight/30), WindowWidth/40 + WindowWidth/100, Color.Red);
+                Raylib.DrawText(ErrorMesage, (WindowWidth/80)*3, (WindowHeight/3)*2 + (WindowHeight/30), WindowWidth/40 + WindowWidth/100, Color.Red);
             }
 
             Raylib.EndDrawing();
