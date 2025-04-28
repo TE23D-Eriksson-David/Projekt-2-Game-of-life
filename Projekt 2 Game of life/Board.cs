@@ -9,6 +9,8 @@ public class Board
     // 2D array med obejekt i sig. Jag kunde kanshe ha gjort det med en array men när jag skrev min metod tänkte jag 
     // att jag behövde skappa lägga in cellerna när jag skappade dem och de var så längden av listan bestämdes vilket
     // Inte skulle fungerat med en array.
+    // Deta var tidigare och dumare jag, men nu har jag en vettigare anledninging vilket är att den måste vara en lista 
+    // wfftersom den måste ändras dynamiskt beroende på skärm storleken vilket en array inte kan.
     public static List<List<Cell>> CellCurenMatrix = new List<List<Cell>>(); // Mina två dimetionela listor
     public static List<List<Cell>> CellNextMatrix = new List<List<Cell>>(); 
     public static int columnCells = 0;
