@@ -3,52 +3,52 @@ namespace Projekt_2_Game_of_life;
 public class Cell
 {
 
-    public static int Size = 12;
+    public static int size = 12;
     public enum CellState
     {
         Dead,
         Alive
     }
 
-    CellState State = CellState.Dead;
+    CellState state = CellState.Dead;
 
-    float Xposition;
-    float YPosition;
+    float xPosition;
+    float yPosition;
 
-    public static int Space = 14;
+    public static int space = 14;
 
 
 
     public static int GetSize(){
-        return Size;
+        return size;
     }
 
     public CellState GetState(){
-        return State;
+        return state;
     }
 
-    public void SetState(CellState NewState){
-        State = NewState; // Sätter om den lever eller om den är död.
+    public void SetState(CellState newState){
+        state = newState; // Sätter om den lever eller om den är död.
     }
 
-    public static void SetSize(int NewSize){
-        Size = NewSize;
+    public static void SetSize(int newSize){
+        size = newSize;
     }
 
-    public void SetXPos(float NewPos){
-        Xposition = NewPos;
+    public void SetXPos(float newPos){
+        xPosition = newPos;
     }
 
-    public void SetYPos(float NewPos){
-        YPosition = NewPos;
+    public void SetYPos(float newPos){
+        yPosition = newPos;
     }
 
     public float GetXPos(){
-        return Xposition;
+        return xPosition;
     }
 
     public float GetYPos(){
-        return YPosition;
+        return yPosition;
     }
 
 } // END OF CLASS

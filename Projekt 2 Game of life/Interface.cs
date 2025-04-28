@@ -18,40 +18,40 @@ public enum Choice // Velen/knapparna som spelaren kan tryka.
 
 public class ButtonTemplate // Knapp mallen 
 {
-    public int XStartPosition = 0;
-    public int YStartPosition = 0;
-    public string TextContent = "Reminder if you forget to change this!!";
-    public int FontSize = Raylib.GetScreenWidth() / 40;
+    public int xStartPosition = 0;
+    public int yStartPosition = 0;
+    public string textContent = "Reminder if you forget to change this!!";
+    public int fontSize = Raylib.GetScreenWidth() / 40;
     Rectangle Rec;
 
 
     public int Create() // Skappa knappen med text. Bakgrunden/Storleken i x led beräknas genom att ta karaktärerna
     {   // I strängen och muliplicera med storleken vilket blir jätte konstigt med långa ord och borde tänkas om.
-        int RecLenght = TextContent.Length * FontSize * 3/4;
-        Rec = new Rectangle(XStartPosition, YStartPosition, RecLenght, FontSize * 2);
+        int recLenght = textContent.Length * fontSize * 3/4;
+        Rec = new Rectangle(xStartPosition, yStartPosition, recLenght, fontSize * 2);
         Raylib.DrawRectangleRec(Rec, Color.Blue);
-        Raylib.DrawText(TextContent, XStartPosition + FontSize / 2, YStartPosition + FontSize / 2, FontSize, Color.Black);
-        return RecLenght;
+        Raylib.DrawText(textContent, xStartPosition + fontSize / 2, yStartPosition + fontSize / 2, fontSize, Color.Black);
+        return recLenght;
     }
 }
 
 public class LineTemplate // Linije mallen vilket är ganska onödig 
 {
-    public int LineWidth = 20;
-    public int LineEndY = 0;
-    public int LineStartX = 0;
-    public int LineStartY = 0;
-    public int LineEndX = 0;
+    public int lineWidth = 20;
+    public int lineEndY = 0;
+    public int lineStartX = 0;
+    public int lineStartY = 0;
+    public int lineEndX = 0;
 
-    Vector2 LineStart = new Vector2(0, 0);
-    Vector2 LineStop = new Vector2(0, 0);
+    Vector2 lineStart = new Vector2(0, 0);
+    Vector2 lineStop = new Vector2(0, 0);
     public void Create()
     {
-        LineStop.Y = LineEndY;
-        LineStop.X = LineEndX;
-        LineStart.Y = LineStartY;
-        LineStart.X = LineStartX;
-        Raylib.DrawLineEx(LineStart, LineStop, LineWidth, Color.Black);
+        lineStop.Y = lineEndY;
+        lineStop.X = lineEndX;
+        lineStart.Y = lineStartY;
+        lineStart.X = lineStartX;
+        Raylib.DrawLineEx(lineStart, lineStop, lineWidth, Color.Black);
     }
 }
 
@@ -60,30 +60,30 @@ public class LineTemplate // Linije mallen vilket är ganska onödig
 
 public class Interface // Hanterar vad som ska ritas utt på fönstret och användarens input.
 {
-    static Vector2 PressedPosition;
-    static Choice UserInput = Choice.None;
-    static int OverLineStartY = 0; // Positionen för linijernas höjd
-    static int UnderLineStartY = 0;
-    static int LineBeginingX = 0;
-    static int LineEndingX = Raylib.GetScreenWidth();
-    static int LineWidth = 12;
+    static Vector2 pressedPosition;
+    static Choice userInput = Choice.None;
+    static int overlineStartY = 0; // Positionen för linijernas höjd
+    static int underlineStartY = 0;
+    static int lineBeginingX = 0;
+    static int lineEndingX = Raylib.GetScreenWidth();
+    static int lineWidth = 12;
 
     public static void Draw() // RIIIIIITAR
     {
-        int WindowHeight = Raylib.GetScreenHeight();
-        int WindowWidth = Raylib.GetScreenWidth();
-        OverLineStartY = Raylib.GetScreenHeight() / 6; // Kollas varge varv det ritas
-        UnderLineStartY = Raylib.GetScreenHeight() * 5 / 6;
+        int windowHeight = Raylib.GetScreenHeight();
+        int windowWidth = Raylib.GetScreenWidth();
+        overlineStartY = Raylib.GetScreenHeight() / 6; // Kollas varge varv det ritas
+        underlineStartY = Raylib.GetScreenHeight() * 5 / 6;
 
         // Skappar instncer av knapparna och linijerna som rittas ut.
-        ButtonTemplate StartButton = new ButtonTemplate() { TextContent = "Start", XStartPosition = WindowWidth/8, YStartPosition = (WindowHeight/6) *5 + WindowHeight/24, };
-        ButtonTemplate EndButton = new ButtonTemplate() { TextContent = "Stop", XStartPosition = (WindowWidth/4) + WindowWidth/32, YStartPosition = (WindowHeight/6) *5 + WindowHeight/24, };
-        ButtonTemplate ClearButton = new ButtonTemplate() { TextContent = "Clear", XStartPosition = (WindowWidth/8)*3 + WindowWidth/32, YStartPosition = (WindowHeight/6) *5 + WindowHeight/24, };
-        ButtonTemplate InstructionsButton = new ButtonTemplate() { TextContent = "Instructions", XStartPosition = (WindowWidth/8) * 5 + WindowWidth/16, YStartPosition = (WindowHeight/6) *5 + WindowHeight/60, }; 
-        ButtonTemplate ChangeWindowSizeButton = new ButtonTemplate() { TextContent = "Change Window Size", XStartPosition = (WindowWidth/8) *5 + WindowWidth/80 + WindowWidth/160, YStartPosition = (WindowHeight/6) *5 + WindowHeight/12 + WindowHeight/150, };
+        ButtonTemplate StartButton = new ButtonTemplate() { textContent = "Start", xStartPosition = windowWidth/8, yStartPosition = (windowHeight/6) *5 + windowHeight/24, };
+        ButtonTemplate EndButton = new ButtonTemplate() { textContent = "Stop", xStartPosition = (windowWidth/4) + windowWidth/32, yStartPosition = (windowHeight/6) *5 + windowHeight/24, };
+        ButtonTemplate ClearButton = new ButtonTemplate() { textContent = "Clear", xStartPosition = (windowWidth/8)*3 + windowWidth/32, yStartPosition = (windowHeight/6) *5 + windowHeight/24, };
+        ButtonTemplate InstructionsButton = new ButtonTemplate() { textContent = "Instructions", xStartPosition = (windowWidth/8) * 5 + windowWidth/16, yStartPosition = (windowHeight/6) *5 + windowHeight/60, }; 
+        ButtonTemplate ChangeWindowSizeButton = new ButtonTemplate() { textContent = "Change Window Size", xStartPosition = (windowWidth/8) *5 + windowWidth/80 + windowWidth/160, yStartPosition = (windowHeight/6) *5 + windowHeight/12 + windowHeight/150, };
 
-        LineTemplate OverBoardLine = new LineTemplate() { LineStartX = 0, LineStartY = OverLineStartY, LineEndX = WindowWidth, LineEndY = OverLineStartY, LineWidth = LineWidth };
-        LineTemplate UnderBoardLine = new LineTemplate() { LineStartX = 0, LineStartY = UnderLineStartY, LineEndX = WindowWidth, LineEndY = UnderLineStartY, LineWidth = LineWidth };
+        LineTemplate OverBoardLine = new LineTemplate() { lineStartX = 0, lineStartY = overlineStartY, lineEndX = windowWidth, lineEndY = overlineStartY, lineWidth = lineWidth };
+        LineTemplate UnderBoardLine = new LineTemplate() { lineStartX = 0, lineStartY = underlineStartY, lineEndX = windowWidth, lineEndY = underlineStartY, lineWidth = lineWidth };
 
 
         Raylib.BeginDrawing(); // Ritt tiden =)
@@ -91,37 +91,37 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
         Raylib.ClearBackground(Color.Gray);
         OverBoardLine.Create();
         UnderBoardLine.Create();
-        int LenghtStartButton = StartButton.Create();
-        int LenghtEndButton = EndButton.Create();   // Hämtar slut x på knapparna 
-        int LenghtClearButton = ClearButton.Create();
-        int LenghtInstructionsButton = InstructionsButton.Create();
-        int LenghtChangeWindowSizeButton = ChangeWindowSizeButton.Create();
-        Raylib.DrawText("The Game Of Life", WindowWidth/40, WindowHeight/30, (WindowWidth/40) *3, Color.Black);
+        int lenghtStartButton = StartButton.Create();
+        int lenghtEndButton = EndButton.Create();   // Hämtar slut x på knapparna 
+        int lenghtClearButton = ClearButton.Create();
+        int lenghtInstructionsButton = InstructionsButton.Create();
+        int lenghtChangeWindowSizeButton = ChangeWindowSizeButton.Create();
+        Raylib.DrawText("The Game Of Life", windowWidth/40, windowHeight/30, (windowWidth/40) *3, Color.Black);
 
         Raylib.EndDrawing(); // Slut på ritt tiden =( 
 
 
         if (Raylib.IsMouseButtonPressed(MouseButton.Left)) // kollar om mussen tryks ner sedan vart
         {   // Om den är inom en av områderna nedan så ändras enumet för anvädarens val.
-            PressedPosition = Raylib.GetMousePosition();
+            pressedPosition = Raylib.GetMousePosition();
 
-            if (PressedPosition.X > StartButton.XStartPosition & PressedPosition.X < StartButton.XStartPosition + LenghtStartButton & PressedPosition.Y > StartButton.YStartPosition & PressedPosition.Y < StartButton.YStartPosition + StartButton.FontSize * 2)
-                UserInput = Choice.Start;
+            if (pressedPosition.X > StartButton.xStartPosition & pressedPosition.X < StartButton.xStartPosition + lenghtStartButton & pressedPosition.Y > StartButton.yStartPosition & pressedPosition.Y < StartButton.yStartPosition + StartButton.fontSize * 2)
+                userInput = Choice.Start;
 
-            if (PressedPosition.X > EndButton.XStartPosition & PressedPosition.X < EndButton.XStartPosition + LenghtEndButton & PressedPosition.Y > EndButton.YStartPosition & PressedPosition.Y < EndButton.YStartPosition + EndButton.FontSize * 2)
-                UserInput = Choice.Stop;
+            if (pressedPosition.X > EndButton.xStartPosition & pressedPosition.X < EndButton.xStartPosition + lenghtEndButton & pressedPosition.Y > EndButton.yStartPosition & pressedPosition.Y < EndButton.yStartPosition + EndButton.fontSize * 2)
+                userInput = Choice.Stop;
 
-            if (PressedPosition.X > ClearButton.XStartPosition & PressedPosition.X < ClearButton.XStartPosition + LenghtClearButton & PressedPosition.Y > ClearButton.YStartPosition & PressedPosition.Y < ClearButton.YStartPosition + ClearButton.FontSize * 2)
-                UserInput = Choice.Clear;
+            if (pressedPosition.X > ClearButton.xStartPosition & pressedPosition.X < ClearButton.xStartPosition + lenghtClearButton & pressedPosition.Y > ClearButton.yStartPosition & pressedPosition.Y < ClearButton.yStartPosition + ClearButton.fontSize * 2)
+                userInput = Choice.Clear;
 
-            if (PressedPosition.X > InstructionsButton.XStartPosition & PressedPosition.X < InstructionsButton.XStartPosition + LenghtInstructionsButton & PressedPosition.Y > InstructionsButton.YStartPosition & PressedPosition.Y < InstructionsButton.YStartPosition + InstructionsButton.FontSize * 2)
-                UserInput = Choice.Instructions;
+            if (pressedPosition.X > InstructionsButton.xStartPosition & pressedPosition.X < InstructionsButton.xStartPosition + lenghtInstructionsButton & pressedPosition.Y > InstructionsButton.yStartPosition & pressedPosition.Y < InstructionsButton.yStartPosition + InstructionsButton.fontSize * 2)
+                userInput = Choice.Instructions;
 
-            if (PressedPosition.X > ChangeWindowSizeButton.XStartPosition & PressedPosition.X < ChangeWindowSizeButton.XStartPosition + LenghtChangeWindowSizeButton & PressedPosition.Y > ChangeWindowSizeButton.YStartPosition & PressedPosition.Y < ChangeWindowSizeButton.YStartPosition + ChangeWindowSizeButton.FontSize * 2)
-                UserInput = Choice.AdjustWindowSize;
+            if (pressedPosition.X > ChangeWindowSizeButton.xStartPosition & pressedPosition.X < ChangeWindowSizeButton.xStartPosition + lenghtChangeWindowSizeButton & pressedPosition.Y > ChangeWindowSizeButton.yStartPosition & pressedPosition.Y < ChangeWindowSizeButton.yStartPosition + ChangeWindowSizeButton.fontSize * 2)
+                userInput = Choice.AdjustWindowSize;
 
-            if (PressedPosition.Y > OverBoardLine.LineStartY + OverBoardLine.LineWidth / 2 & PressedPosition.Y < UnderBoardLine.LineStartY - OverBoardLine.LineWidth / 2)
-                UserInput = Choice.BoardInput;
+            if (pressedPosition.Y > OverBoardLine.lineStartY + OverBoardLine.lineWidth / 2 & pressedPosition.Y < UnderBoardLine.lineStartY - OverBoardLine.lineWidth / 2)
+                userInput = Choice.BoardInput;
 
         }
 
@@ -130,37 +130,37 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
 
     public static void PromptInstructionWindow() // EN egen metod för att rita utt instruktions rutan.
     {   
-        int WindowHeight = Raylib.GetScreenHeight();
-        int WindowWidth = Raylib.GetScreenWidth();
+        int windowHeight = Raylib.GetScreenHeight();
+        int windowWidth = Raylib.GetScreenWidth();
         
         // Väldigt lång instruktion som jag inte orkade skriva själv ChatGPT =)
-        string VeryLongTextContent = "Conway's Game of Life is a grid-based \nsimulation where cells live or die based \non simple rules. Each cell checks its 8 \nneighbors: It lives on with 2 or 3 neighbors,\nDies from loneliness or overcrowding,\nA dead cell is reborn with exactly 3 neighbors\nYou can click to toggle cells, press run\nto simulate, stop to stop simulating, and clear \nto clear the grid. There's no goal — just \npatterns that grow, move, or fade. It's a \nsandbox where complexity emerges \nfrom simplicity.";
+        string veryLongtextContent = "Conway's Game of Life is a grid-based \nsimulation where cells live or die based \non simple rules. Each cell checks its 8 \nneighbors: It lives on with 2 or 3 neighbors,\nDies from loneliness or overcrowding,\nA dead cell is reborn with exactly 3 neighbors\nYou can click to toggle cells, press run\nto simulate, stop to stop simulating, and clear \nto clear the grid. There's no goal — just \npatterns that grow, move, or fade. It's a \nsandbox where complexity emerges \nfrom simplicity.";
 
-        ButtonTemplate CloseInstructionsButton = new ButtonTemplate() { TextContent = "Close", XStartPosition = (WindowWidth/8)*6 + (WindowWidth/20), YStartPosition = WindowHeight/12, };
+        ButtonTemplate CloseInstructionsButton = new ButtonTemplate() { textContent = "Close", xStartPosition = (windowWidth/8)*6 + (windowWidth/20), yStartPosition = windowHeight/12, };
 
-        while (UserInput == Choice.Instructions) // Så länge användaren inte trykt på stäng knappen
+        while (userInput == Choice.Instructions) // Så länge användaren inte trykt på stäng knappen
         {
             Raylib.BeginDrawing(); // Rittar ut rutan med text och stäng knappen.
 
-            Raylib.DrawRectangle(WindowWidth/16, WindowHeight/30, (WindowWidth/8)*7, (WindowHeight/6)*5, Color.LightGray);
-            Rectangle r2 = new Rectangle(WindowWidth/16, WindowHeight/30, (WindowWidth/8)*7, (WindowHeight/6)*5);
+            Raylib.DrawRectangle(windowWidth/16, windowHeight/30, (windowWidth/8)*7, (windowHeight/6)*5, Color.LightGray);
+            Rectangle r2 = new Rectangle(windowWidth/16, windowHeight/30, (windowWidth/8)*7, (windowHeight/6)*5);
             Raylib.DrawRectangleLinesEx(r2, 5, Color.Black);
-            int LenghtCloseInstructionButton = CloseInstructionsButton.Create();
-            Raylib.DrawText("Istructioner", (WindowWidth/40)*4, (WindowHeight/60)*4, WindowWidth/10, Color.White);
-            Raylib.DrawText(VeryLongTextContent, (WindowWidth/40)*4, (WindowHeight/24)*5, WindowWidth/40 + WindowWidth/100, Color.White);
+            int lenghtCloseInstructionButton = CloseInstructionsButton.Create();
+            Raylib.DrawText("Istructioner", (windowWidth/40)*4, (windowHeight/60)*4, windowWidth/10, Color.White);
+            Raylib.DrawText(veryLongtextContent, (windowWidth/40)*4, (windowHeight/24)*5, windowWidth/40 + windowWidth/100, Color.White);
 
             Raylib.EndDrawing();
 
             if (Raylib.IsMouseButtonPressed(MouseButton.Left)) // Kollar om musen är ned trykt sedan om knappen tryktes.
             {
-                PressedPosition = Raylib.GetMousePosition();
-                if (PressedPosition.X > CloseInstructionsButton.XStartPosition & PressedPosition.X < CloseInstructionsButton.XStartPosition + LenghtCloseInstructionButton & PressedPosition.Y > CloseInstructionsButton.YStartPosition & PressedPosition.Y < CloseInstructionsButton.YStartPosition + CloseInstructionsButton.FontSize * 2)
-                    UserInput = Choice.CloseInstructions;
+                pressedPosition = Raylib.GetMousePosition();
+                if (pressedPosition.X > CloseInstructionsButton.xStartPosition & pressedPosition.X < CloseInstructionsButton.xStartPosition + lenghtCloseInstructionButton & pressedPosition.Y > CloseInstructionsButton.yStartPosition & pressedPosition.Y < CloseInstructionsButton.yStartPosition + CloseInstructionsButton.fontSize * 2)
+                    userInput = Choice.CloseInstructions;
             }
 
             if (Raylib.WindowShouldClose()) // Gör så att man kan stänga fönstret 
             { // Gör så att den går ur whille loppen och sedan stänger.
-                UserInput = Choice.CloseInstructions;
+                userInput = Choice.CloseInstructions;
             }
 
         }
@@ -173,38 +173,38 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
 
 
 
-    public static bool EntetySizeRecalibration = false;
-    public static bool Close = false;
-    public static string StringUserInput = "";
-    public static string ErrorMesage = "";
+    public static bool entetySizeRecalibration = false;
+    public static bool close = false;
+    public static string stringuserInput = "";
+    public static string errorMesage = "";
 
     public static void PromptAjdustingWindow()
     {
-        int WindowHeight = Raylib.GetScreenHeight();
-        int WindowWidth = Raylib.GetScreenWidth();
+        int windowHeight = Raylib.GetScreenHeight();
+        int windowWidth = Raylib.GetScreenWidth();
 
-        Close = false;
-        while (Close == false)
+        close = false;
+        while (close == false)
         {
             if (Raylib.WindowShouldClose()) // Gör så att man kan stänga fönstret 
             { // Gör så att den går ur whille loppen och sedan stänger.
-                Close = true;
+                close = true;
             }
             if (Raylib.IsKeyPressed(KeyboardKey.Escape))
             {
-                Close = true; // Stänger fönstret
-                StringUserInput = "";
+                close = true; // Stänger fönstret
+                stringuserInput = "";
             }
             if (Raylib.IsKeyPressed(KeyboardKey.Enter)) // Enter
             { 
-                ErrorMesage = AdjustSizeAfterInput(); // Tar strängen och fixar den sedan ändrar storlek på fönstret
-                if (ErrorMesage == "")
-                    Close = true;
+                errorMesage = AdjustSizeAfterInput(); // Tar strängen och fixar den sedan ändrar storlek på fönstret
+                if (errorMesage == "")
+                    close = true;
             }
             if (Raylib.IsKeyPressed(KeyboardKey.Backspace)) // Baksteg
             { 
-                if (StringUserInput.Length > 0)
-                    StringUserInput = StringUserInput.Substring(0, StringUserInput.Length - 1);
+                if (stringuserInput.Length > 0)
+                    stringuserInput = stringuserInput.Substring(0, stringuserInput.Length - 1);
             } // Skppar en sträng av strängen men kan ta emot ett länd arhument vilket gör att jag kan 
               // korta ner strängen vilket jag vill =)
 
@@ -214,26 +214,26 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
             while (key > 0) // Om användare trök på något
             {
                 if (key > 31 && key < 127) //Vanliga tecken
-                    StringUserInput += (char)key; // Konverterar sifra till karaktär
+                    stringuserInput += (char)key; // Konverterar sifra till karaktär
 
                 key = Raylib.GetCharPressed(); // Tar nästa tangent i kön om användaren tryker på en frame.
             }
 
-            Raylib.BeginDrawing(); // Rittar ut rutan med användarens text/ userinput.
+            Raylib.BeginDrawing(); // Rittar ut rutan med användarens text/ userInput.
 
-            Raylib.DrawRectangle(0, 0, WindowWidth, WindowHeight, Color.LightGray);
-            Rectangle r2 = new Rectangle(0, 0, WindowWidth, WindowHeight);
+            Raylib.DrawRectangle(0, 0, windowWidth, windowHeight, Color.LightGray);
+            Rectangle r2 = new Rectangle(0, 0, windowWidth, windowHeight);
             Raylib.DrawRectangleLinesEx(r2, 10, Color.Black);
 
-            Raylib.DrawText("Här kan du ändra stroleken på skärmen genom att \nskriva den storleken som du vill ha i x och y led! \nDet finns bara två restriktioner. 1. Formatet för din \ninput måste se utt på deta sätt tex orginal storleken \n'800x600' med ett x imellan bräden och höjden. \n2. Skärmstorlekn få inte överstiga 1000x1000 eller \nunderstiga 400x400 annars får jag problem. Du kan \nskriva genom att tryka på tangenterna och ta bort \nmed baksteg, för att sedan bekräfta/submita din \nstorlek tryker du på Enter! ", (WindowWidth/80)*3, WindowHeight/6, (WindowWidth/200)*7, Color.White);
-            Raylib.DrawText("Skärm Storleks Ändraren", (WindowWidth/80)*3, WindowHeight/20, (WindowWidth/160)*11, Color.White);
-            Raylib.DrawText($"Enter size: {StringUserInput}", (WindowWidth/80)*3, (WindowHeight/6)*5, (WindowWidth/20), Color.White);
-            Vector2 StartLinePos = new Vector2((WindowWidth/80)*3,  (WindowHeight/6)*5 + WindowWidth/15 - WindowWidth/100); Vector2 EndLinePos = new Vector2(WindowWidth/2 + (WindowWidth/40)*3, (WindowHeight/6)*5 + WindowWidth/15 - WindowWidth/100);
-            Raylib.DrawLineEx(StartLinePos, EndLinePos, 5, Color.White);
+            Raylib.DrawText("Här kan du ändra stroleken på skärmen genom att \nskriva den storleken som du vill ha i x och y led! \nDet finns bara två restriktioner. 1. Formatet för din \ninput måste se utt på deta sätt tex orginal storleken \n'800x600' med ett x imellan bräden och höjden. \n2. Skärmstorlekn få inte överstiga 1000x1000 eller \nunderstiga 400x400 annars får jag problem. Du kan \nskriva genom att tryka på tangenterna och ta bort \nmed baksteg, för att sedan bekräfta/submita din \nstorlek tryker du på Enter! ", (windowWidth/80)*3, windowHeight/6, (windowWidth/200)*7, Color.White);
+            Raylib.DrawText("Skärm Storleks Ändraren", (windowWidth/80)*3, windowHeight/20, (windowWidth/160)*11, Color.White);
+            Raylib.DrawText($"Enter size: {stringuserInput}", (windowWidth/80)*3, (windowHeight/6)*5, (windowWidth/20), Color.White);
+            Vector2 startLinePos = new Vector2((windowWidth/80)*3,  (windowHeight/6)*5 + windowWidth/15 - windowWidth/100); Vector2 endLinePos = new Vector2(windowWidth/2 + (windowWidth/40)*3, (windowHeight/6)*5 + windowWidth/15 - windowWidth/100);
+            Raylib.DrawLineEx(startLinePos, endLinePos, 5, Color.White);
 
-            if (ErrorMesage.Length != 0) // Skriver bara utt om det finns något i.
+            if (errorMesage.Length != 0) // Skriver bara utt om det finns något i.
             {
-                Raylib.DrawText(ErrorMesage, (WindowWidth/80)*3, (WindowHeight/3)*2 + (WindowHeight/30), WindowWidth/40 + WindowWidth/100, Color.Red);
+                Raylib.DrawText(errorMesage, (windowWidth/80)*3, (windowHeight/3)*2 + (windowHeight/30), windowWidth/40 + windowWidth/100, Color.Red);
             }
 
             Raylib.EndDrawing();
@@ -246,39 +246,39 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
     public static string AdjustSizeAfterInput()
     {
         
-        StringUserInput = StringUserInput.Trim().ToLower(); // Tar bort mellanslag och sätter alla bokstäver som inte bör vara där och bör till des mindre form.
+        stringuserInput = stringuserInput.Trim().ToLower(); // Tar bort mellanslag och sätter alla bokstäver som inte bör vara där och bör till des mindre form.
 
         // användare behöver skriva så här "800x600" !!!
-        string[] InputPart = StringUserInput.Split('x'); // Dellar strängen där x förekommer och tar bort den av någon anledning jag trode först att den hamnade i någon av strängarna tills jag testade och kunnde inte hitta den vilket var lite roligt när jag funderade i typ en menut för att sedan lässa nogrant vad metoden gör och slå handflatan i ansiktet.
+        string[] InputPart = stringuserInput.Split('x'); // Dellar strängen där x förekommer och tar bort den av någon anledning jag trode först att den hamnade i någon av strängarna tills jag testade och kunnde inte hitta den vilket var lite roligt när jag funderade i typ en menut för att sedan lässa nogrant vad metoden gör och slå handflatan i ansiktet.
 
         if (InputPart.Length == 2)
         {
-            if (int.TryParse(InputPart[0], out int NewWidth) && int.TryParse(InputPart[1], out int NewHeight))
+            if (int.TryParse(InputPart[0], out int newWidth) && int.TryParse(InputPart[1], out int newHeight))
             { // Try parsar användarens input, Uppmärksamma att jag använder TRYPARSE.
-                if (NewWidth <= 1000 && NewWidth >= 400 && NewHeight <= 1000 && NewHeight >= 400)
+                if (newWidth <= 1000 && newWidth >= 400 && newHeight <= 1000 && newHeight >= 400)
                 {
-                    Raylib.SetWindowSize(NewWidth, NewHeight);
-                    EntetySizeRecalibration = true;
+                    Raylib.SetWindowSize(newWidth, newHeight);
+                    entetySizeRecalibration = true;
                 }
                 else
                 {
-                    StringUserInput = ""; // sätter den till inget för nästa gång
+                    stringuserInput = ""; // sätter den till inget för nästa gång
                     return "För stora eller små x eller y parametrar. Testa \natt skriva en input inom de rekommenderade ramarna";
                 }
             }
             else
             {
-                StringUserInput = ""; // sätter den till inget för nästa gång
+                stringuserInput = ""; // sätter den till inget för nästa gång
                 return "Skärmstorleken tar bara emot sifror i din input, \nframför och bakom ditt 'x'";
             }
         }
         else
         {
-            StringUserInput = ""; // sätter den till inget för nästa gång
+            stringuserInput = ""; // sätter den till inget för nästa gång
             return "Du kan bara använda dig av 1 x i din input och \nden måste vara mellan höden och längden";
         }
 
-        StringUserInput = ""; // sätter den till inget för nästa gång
+        stringuserInput = ""; // sätter den till inget för nästa gång
         return "";
     }
 
@@ -286,26 +286,26 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
 
     public static Choice GetChoice()
     {
-        return UserInput;
+        return userInput;
     }
 
-    public static void SetChoice(Choice InChoice)
+    public static void SetChoice(Choice inChoice)
     {
-        UserInput = InChoice;
+        userInput = inChoice;
     }
 
     public static Vector2 GetMousePosition()
     {
-        return PressedPosition;
+        return pressedPosition;
     }
 
-    public static void GetBoardDimentions(out Vector2 YSize, out Vector2 XSize)
+    public static void GetBoardDimentions(out Vector2 ySize, out Vector2 xSize)
     {
-        YSize.X = OverLineStartY + LineWidth / 2;
-        YSize.Y = UnderLineStartY - LineWidth / 2;
+        ySize.X = overlineStartY + lineWidth / 2;
+        ySize.Y = underlineStartY - lineWidth / 2;
 
-        XSize.X = LineBeginingX;
-        XSize.Y = LineEndingX;
+        xSize.X = lineBeginingX;
+        xSize.Y = lineEndingX;
     }
 
 }

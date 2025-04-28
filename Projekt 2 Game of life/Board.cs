@@ -11,37 +11,37 @@ public class Board
     // Inte skulle fungerat med en array.
     public static List<List<Cell>> CellCurenMatrix = new List<List<Cell>>(); // Mina två dimetionela listor
     public static List<List<Cell>> CellNextMatrix = new List<List<Cell>>(); 
-    public static int ColumnCells = 0;
-    public static int RowCells = 0;
+    public static int columnCells = 0;
+    public static int rowCells = 0;
 
 
 
     public static void DrawMatrix() // Ritar ut brädet inom de två svarta linijerna på interfacet.
     {
 
-        int CellSize = Cell.GetSize(); // Cellernas storlek
-        Rectangle RectangleTemplate = new Rectangle(0, 0, CellSize, CellSize);
+        int cellSize = Cell.GetSize(); // Cellernas storlek
+        Rectangle rectangleTemplate = new Rectangle(0, 0, cellSize, cellSize);
 
         foreach (List<Cell> List in CellCurenMatrix)
         {
             foreach (Cell Instence in List) // Deta görs för varge cell
             {
-                Cell.CellState State = Instence.GetState();
-                RectangleTemplate.X = Instence.GetXPos(); // Hämtar positionen av cellen
-                RectangleTemplate.Y = Instence.GetYPos();
-                Color CellCollor = Color.DarkGreen;
+                Cell.CellState state = Instence.GetState();
+                rectangleTemplate.X = Instence.GetXPos(); // Hämtar positionen av cellen
+                rectangleTemplate.Y = Instence.GetYPos();
+                Color cellCollor = Color.DarkGreen;
 
-                switch (State)
+                switch (state)
                 {
                     case Cell.CellState.Alive:
-                        CellCollor = Color.White;
+                        cellCollor = Color.White;
                         break;
                     case Cell.CellState.Dead:
-                        CellCollor = Color.Beige;
+                        cellCollor = Color.Beige;
                         break;
                 }
 
-                Raylib.DrawRectangleRec(RectangleTemplate, CellCollor); // Ritar ut min cell
+                Raylib.DrawRectangleRec(rectangleTemplate, cellCollor); // Ritar ut min cell
 
             }
         }
@@ -50,38 +50,38 @@ public class Board
 
  
 
-    public static void CreateMatrix(Vector2 BoardSizeX, Vector2 BoardSizeY, int CellSize)
+    public static void CreateMatrix(Vector2 boardSizeX, Vector2 boardSizeY, int cellSize)
     { // Skappar mina celler och lägger in dem i mina två listor.
-        int CellSpace = Cell.Space; // mellanrumet mellan cellerna.
-        Rectangle RectangleTemplate = new Rectangle(0, 0, CellSize, CellSize);
-        BoardSizeX.Y = Raylib.GetScreenWidth();
+        int CellSpace = Cell.space; // mellanrumet mellan cellerna.
+        Rectangle RectangleTemplate = new Rectangle(0, 0, cellSize, cellSize);
+        boardSizeX.Y = Raylib.GetScreenWidth();
         CellCurenMatrix.Clear(); // Om listan redan är full så måste den tömas anars problem.
         CellNextMatrix.Clear(); // Deta görs för att skärmstorleken kan ändras.
-        ColumnCells = 0;
-        RowCells = 0;
+        columnCells = 0;
+        rowCells = 0;
         
 
-        for (RectangleTemplate.Y = BoardSizeY.X; RectangleTemplate.Y < BoardSizeY.Y; RectangleTemplate.Y += CellSpace)
+        for (RectangleTemplate.Y = boardSizeY.X; RectangleTemplate.Y < boardSizeY.Y; RectangleTemplate.Y += CellSpace)
         { // Inom ramarna för det två linijerna i yled, görs till en cell som skappas har des slut y position utanför den svarat linijen.
             CellCurenMatrix.Add(new List<Cell>()); // Läggs till en lista med cell obejekt som data typ.
             CellNextMatrix.Add(new List<Cell>());
-            ColumnCells = 0; // Räknare för rader x led som sätts till 0
+            columnCells = 0; // Räknare för rader x led som sätts till 0
 
-            for (RectangleTemplate.X = BoardSizeX.X; RectangleTemplate.X < BoardSizeX.Y - CellSpace; RectangleTemplate.X += CellSpace)
+            for (RectangleTemplate.X = boardSizeX.X; RectangleTemplate.X < boardSizeX.Y - CellSpace; RectangleTemplate.X += CellSpace)
             {  // räknar i x led och lägger till cell storleken och mellanrumet för varge varv och samma som i den övre loppen.
                 Cell CurentMatrixCell = new Cell(); 
                 CurentMatrixCell.SetYPos(RectangleTemplate.Y);
                 CurentMatrixCell.SetXPos(RectangleTemplate.X);
-                CellCurenMatrix[RowCells].Add(CurentMatrixCell);
+                CellCurenMatrix[rowCells].Add(CurentMatrixCell);
                 // Skppar en cell för varge lista och lägger till nuvarande position i dem. Läger in dem i listan.
                 Cell NextMatrixCell = new Cell();
                 NextMatrixCell.SetYPos(RectangleTemplate.Y);
                 NextMatrixCell.SetXPos(RectangleTemplate.X);
-                CellNextMatrix[RowCells].Add(NextMatrixCell);
+                CellNextMatrix[rowCells].Add(NextMatrixCell);
 
-                ColumnCells++;  // räknar rader i x led  
+                columnCells++;  // räknar rader i x led  
             }
-            RowCells++; // räknar rader i Y led    
+            rowCells++; // räknar rader i Y led    
         }
     }
 
@@ -91,9 +91,9 @@ public class Board
 
         if (State == SimulationState.Running)
         {
-            for (int y = 0; y < RowCells - 1; y++)
+            for (int y = 0; y < rowCells - 1; y++)
             {
-                for (int x = 0; x < ColumnCells - 1; x++)
+                for (int x = 0; x < columnCells - 1; x++)
                 {
                     Cell.CellState state = CellNextMatrix[y][x].GetState();
                     CellCurenMatrix[y][x].SetState(state);
@@ -106,11 +106,3 @@ public class Board
 
 
 } // END OF CLASS
-
-
-
-
-
-
-
-
