@@ -13,9 +13,9 @@ public class Simulation_Rules
         if (Condition == SimulationState.Running)
         {
 
-            for (int Lists = 0; Lists < Board.RowCells; Lists++) // Antalet rader i matrisen, vertikalt
+            for (int Lists = 0; Lists < Board.rowCells; Lists++) // Antalet rader i matrisen, vertikalt
             {
-                for (int Cells = 0; Cells < Board.ColumnCells; Cells++) // antalet Cells i en lista, horisontelt
+                for (int Cells = 0; Cells < Board.columnCells; Cells++) // antalet Cells i en lista, horisontelt
                 {
 
                     AliveCloseCells = 0;
@@ -29,9 +29,9 @@ public class Simulation_Rules
                                 continue;
 
 
-                            if (Lists + y <= Board.RowCells - 1 && Lists + y >= 0) 
+                            if (Lists + y <= Board.rowCells - 1 && Lists + y >= 0) 
                             { // Gör så att det inte går uttanför listan
-                                if (Cells + x <= Board.ColumnCells - 1 && Cells + x >= 0)
+                                if (Cells + x <= Board.columnCells - 1 && Cells + x >= 0)
                                 {
                                     CurrentCellState = Board.CellCurenMatrix[Lists + y][Cells + x].GetState();
                                     // Hämtar cellens state
