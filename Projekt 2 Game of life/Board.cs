@@ -5,26 +5,13 @@ namespace Projekt_2_Game_of_life;
 
 public class Board
 {
-    // Min aledning för varför jag använder listor istället för arrayer är för att jag tror man inte kan skappa en
-    // 2D array med obejekt i sig. Jag kunde kanshe ha gjort det med en array men när jag skrev min metod tänkte jag 
-    // att jag behövde skappa lägga in cellerna när jag skappade dem och de var så längden av listan bestämdes vilket
-    // Inte skulle fungerat med en array.
-    // Deta var tidigare och dumare jag, men nu har jag en vettigare anledninging vilket är att den måste vara en lista 
-    // wfftersom den måste ändras dynamiskt beroende på skärm storleken vilket en array inte kan.
-    public static List<List<Cell>> CellCurenMatrix = new List<List<Cell>>(); // Mina två dimetionela listor
-    public static List<List<Cell>> CellNextMatrix = new List<List<Cell>>(); 
-    public static int columnCells = 0;
-    public static int rowCells = 0;
-
-
-
-    public static void DrawMatrix() // Ritar ut brädet inom de två svarta linijerna på interfacet.
+    public static void DrawMatrix(List<List<Cell>> CellCurentMatrix) // Ritar ut brädet inom de två svarta linijerna på interfacet.
     {
 
         int cellSize = Cell.GetSize(); // Cellernas storlek
         Rectangle rectangleTemplate = new Rectangle(0, 0, cellSize, cellSize);
 
-        foreach (List<Cell> List in CellCurenMatrix)
+        foreach (List<Cell> List in CellCurentMatrix)
         {
             foreach (Cell Instence in List) // Deta görs för varge cell
             {
@@ -51,21 +38,30 @@ public class Board
     }
 
  
+    // Skappar mina celler och lägger in dem i mina två listor.
+    public static void CreateMatrix(Vector2 boardSizeX, Vector2 boardSizeY, int cellSize, out List<List<Cell>> CellCurentMatrix, out List<List<Cell>> CellNextMatrix, out int columnCells, out int rowCells)
+    { 
+        // Min aledning för varför jag använder listor istället för arrayer är för att jag tror man inte kan skappa en
+        // 2D array med obejekt i sig. Jag kunde kanshe ha gjort det med en array men när jag skrev min metod tänkte jag 
+        // att jag behövde skappa lägga in cellerna när jag skappade dem och de var så längden av listan bestämdes vilket
+        // Inte skulle fungerat med en array.
+        // Deta var tidigare och dumare jag, men nu har jag en vettigare anledninging vilket är att den måste vara en lista 
+        // efftersom den måste ändras dynamiskt beroende på skärm storleken vilket en array inte kan.
 
-    public static void CreateMatrix(Vector2 boardSizeX, Vector2 boardSizeY, int cellSize)
-    { // Skappar mina celler och lägger in dem i mina två listor.
+        CellCurentMatrix = new List<List<Cell>>(); // Mina två dimetionela listor
+        CellNextMatrix = new List<List<Cell>>();
+        CellCurentMatrix.Clear(); // Om listan redan är full så måste den tömas anars problem.
+        CellNextMatrix.Clear(); // Deta görs för att skärmstorleken kan ändras.
+        columnCells = 0;
+        rowCells = 0; 
         int CellSpace = Cell.space; // mellanrumet mellan cellerna.
         Rectangle RectangleTemplate = new Rectangle(0, 0, cellSize, cellSize);
         boardSizeX.Y = Raylib.GetScreenWidth();
-        CellCurenMatrix.Clear(); // Om listan redan är full så måste den tömas anars problem.
-        CellNextMatrix.Clear(); // Deta görs för att skärmstorleken kan ändras.
-        columnCells = 0;
-        rowCells = 0;
-        
+
 
         for (RectangleTemplate.Y = boardSizeY.X; RectangleTemplate.Y < boardSizeY.Y; RectangleTemplate.Y += CellSpace)
         { // Inom ramarna för det två linijerna i yled, görs till en cell som skappas har des slut y position utanför den svarat linijen.
-            CellCurenMatrix.Add(new List<Cell>()); // Läggs till en lista med cell obejekt som data typ.
+            CellCurentMatrix.Add(new List<Cell>()); // Läggs till en lista med cell obejekt som data typ.
             CellNextMatrix.Add(new List<Cell>());
             columnCells = 0; // Räknare för rader x led som sätts till 0
 
@@ -74,7 +70,7 @@ public class Board
                 Cell CurentMatrixCell = new Cell(); 
                 CurentMatrixCell.SetYPos(RectangleTemplate.Y);
                 CurentMatrixCell.SetXPos(RectangleTemplate.X);
-                CellCurenMatrix[rowCells].Add(CurentMatrixCell);
+                CellCurentMatrix[rowCells].Add(CurentMatrixCell);
                 // Skppar en cell för varge lista och lägger till nuvarande position i dem. Läger in dem i listan.
                 Cell NextMatrixCell = new Cell();
                 NextMatrixCell.SetYPos(RectangleTemplate.Y);
@@ -88,7 +84,7 @@ public class Board
     }
 
 
-    public static void UpdateMatrix(SimulationState State) 
+    public static void UpdateMatrix(SimulationState State, List<List<Cell>> CellCurentMatrix, List<List<Cell>> CellNextMatrix, int columnCells, int rowCells) 
     { // Tar cellen state från nya och lägger in i nuvarande.
 
         if (State == SimulationState.Running)
@@ -98,13 +94,12 @@ public class Board
                 for (int x = 0; x < columnCells - 1; x++)
                 {
                     Cell.CellState state = CellNextMatrix[y][x].GetState();
-                    CellCurenMatrix[y][x].SetState(state);
+                    CellCurentMatrix[y][x].SetState(state);
                 }
             }
         }
 
     }
-
 
 
 } // END OF CLASS

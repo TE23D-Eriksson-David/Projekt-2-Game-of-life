@@ -3,7 +3,13 @@ namespace Projekt_2_Game_of_life;
 public class Cell
 {
 
+    public static int space = 14;
     public static int size = 12;
+    float xPosition;
+    float yPosition;
+
+
+
     public enum CellState
     {
         Dead,
@@ -12,10 +18,8 @@ public class Cell
 
     CellState state = CellState.Dead;
 
-    float xPosition;
-    float yPosition;
 
-    public static int space = 14;
+
 
 
 

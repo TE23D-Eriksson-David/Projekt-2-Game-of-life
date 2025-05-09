@@ -5,39 +5,42 @@ using SC = System.Console;
 
 Raylib.SetTargetFPS(60);
 Raylib.InitWindow(800, 600, "Game Of Life");
-SC.Title = "My window";
+SC.Title = "My Game";
 
 Choice userInput; // enum för spellarens vall
-SimulationState state; // enum om simulationen körs
-Vector2 mousePressedPosition;
+SimulationState state = SimulationState.None;; // enum om simulationen körs
 Vector2 boardSizeY;
 Vector2 boardSizeX;
-
+Vector2 pressedPosition;
+List<List<Cell>> curentCellMatrix = new List<List<Cell>>(); // Mina två dimetionela listor
+List<List<Cell>> nextCellMatrix = new List<List<Cell>>();
 bool createOnce = true; // En engångsvariabel för att skappa Matrixarna en gång
+int columnCells = 0;
+int rowCells = 0; 
 
 
 while (!Raylib.WindowShouldClose())
 {
-    Interface.SetChoice(Choice.None); // Sätter användarens val till inget så att den bara görs en gång.
-    Interface.Draw(); // Ritar utt interfacet 
-    userInput = Interface.GetChoice(); // Hämtar inputen från användarn, vilket val som har trykts.
-    mousePressedPosition = Interface.GetMousePosition(); // hämtar X & Y kordinaten i en vector där användaren trykte. 
-    Interface.GetBoardDimentions(out boardSizeY, out boardSizeX);  // Hämtar ramens inskrivnings kordinater, beroende på de övre och undre linijerna.
+    int overlineStartY = Raylib.GetScreenHeight() / 6; // Positionen för linijernas höjd
+    int underlineStartY = Raylib.GetScreenHeight() * 5 / 6;   
+    userInput = Choice.None;
+
+    userInput = Interface.Draw(out pressedPosition,userInput,overlineStartY,underlineStartY); // Ritar utt interfacet 
+    Interface.GetBoardDimentions(out boardSizeY, out boardSizeX,overlineStartY,underlineStartY);  // Hämtar ramens inskrivnings kordinater, beroende på de övre och undre linijerna.
 
     if (createOnce)
     { // Görs en gång
-        SC.WriteLine("do");
         int cellSize = Cell.GetSize(); // hämtar storleken på cellen
-        Board.CreateMatrix(boardSizeX, boardSizeY, cellSize); // Skappar de två matrixerna 2dListor.
+        Board.CreateMatrix(boardSizeX, boardSizeY, cellSize, out curentCellMatrix, out nextCellMatrix, out columnCells, out rowCells); // Skappar de två matrixerna 2dListor.
         createOnce = false;
     }
 
-    Board.DrawMatrix(); // Rita utt Brädet/Matrixen
+    Board.DrawMatrix(curentCellMatrix); // Rita utt Brädet/Matrixen
 
-    state = Game_Logic.EvaluateUserInput(userInput, mousePressedPosition, out createOnce); // Utför beslutet som spellarn har fattat och returnar statet för simulationen.
-    Simulation_Rules.Run(state); // Kör simulationen enligt statet och för in resultatet i nästa matrix.
+    state = Game_Logic.EvaluateUserInput(state, userInput, pressedPosition, out createOnce, out userInput, curentCellMatrix, nextCellMatrix); // Utför beslutet som spellarn har fattat och returnar statet för simulationen.
+    Simulation_Rules.Run(state, curentCellMatrix, nextCellMatrix, columnCells, rowCells); // Kör simulationen enligt statet och för in resultatet i nästa matrix.
 
-    Board.UpdateMatrix(state); // För in nästa matrix i nuvarande, görs bara om simulationen körs.
+    Board.UpdateMatrix(state, curentCellMatrix, nextCellMatrix, columnCells, rowCells); // För in nästa matrix i nuvarande, görs bara om simulationen körs.
     Thread.Sleep(50); // Liten delay på en 20 dels sekund
 
 }
