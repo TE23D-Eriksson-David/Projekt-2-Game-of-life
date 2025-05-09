@@ -23,35 +23,43 @@ public class Cell
 
 
 
-    public static int GetSize(){
+    public static int GetSize()
+    {
         return size;
     }
 
-    public CellState GetState(){
+    public CellState GetState()
+    {
         return state;
     }
 
-    public void SetState(CellState newState){
+    public void SetState(CellState newState)
+    {
         state = newState; // Sätter om den lever eller om den är död.
     }
 
-    public static void SetSize(int newSize){
+    public static void SetSize(int newSize)
+    {
         size = newSize;
     }
 
-    public void SetXPos(float newPos){
+    public void SetXPos(float newPos)
+    {
         xPosition = newPos;
     }
 
-    public void SetYPos(float newPos){
+    public void SetYPos(float newPos)
+    {
         yPosition = newPos;
     }
 
-    public float GetXPos(){
+    public float GetXPos()
+    {
         return xPosition;
     }
 
-    public float GetYPos(){
+    public float GetYPos()
+    {
         return yPosition;
     }
 

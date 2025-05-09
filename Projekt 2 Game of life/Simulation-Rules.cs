@@ -4,20 +4,20 @@ namespace Projekt_2_Game_of_life;
 public class Simulation_Rules
 {
 
-    public static void Run(SimulationState Condition, List<List<Cell>> CellCurentMatrix, List<List<Cell>> CellNextMatrix, int columnCells, int rowCells) 
+    public static void Run(SimulationState condition, List<List<Cell>> cellCurentMatrix, List<List<Cell>> cellNextMatrix, int columnCells, int rowCells)
     { // När simulationen körs så kollas det runt alla celler effter hur många grannar som lever genom två for loopar
         // i varandra, sedan om antalet uppfyller någon av fallen nedan så uppdateras cellens state beroende på det.
-        if (Condition == SimulationState.Running)
+        if (condition == SimulationState.Running)
         {
-            int AliveCloseCells;
-            Cell.CellState CurrentCellState;
+            int aliveCloseCells;
+            Cell.CellState currentCellState;
 
-            for (int Lists = 0; Lists < rowCells; Lists++) // Antalet rader i matrisen, vertikalt
+            for (int lists = 0; lists < rowCells; lists++) // Antalet rader i matrisen, vertikalt
             {
-                for (int Cells = 0; Cells < columnCells; Cells++) // antalet Cells i en lista, horisontelt
+                for (int cells = 0; cells < columnCells; cells++) // antalet Cells i en lista, horisontelt
                 {
 
-                    AliveCloseCells = 0;
+                    aliveCloseCells = 0;
 
                     for (int y = -1; y <= 1; y++)
                     {
@@ -28,37 +28,37 @@ public class Simulation_Rules
                                 continue;
 
 
-                            if (Lists + y <= rowCells - 1 && Lists + y >= 0) 
+                            if (lists + y <= rowCells - 1 && lists + y >= 0)
                             { // Gör så att det inte går uttanför listan
-                                if (Cells + x <= columnCells - 1 && Cells + x >= 0)
+                                if (cells + x <= columnCells - 1 && cells + x >= 0)
                                 {
-                                    CurrentCellState = CellCurentMatrix[Lists + y][Cells + x].GetState();
+                                    currentCellState = cellCurentMatrix[lists + y][cells + x].GetState();
                                     // Hämtar cellens state
-                                    if (CurrentCellState == Cell.CellState.Alive)
-                                        AliveCloseCells++; // Om den lever, läg den på räknaren
+                                    if (currentCellState == Cell.CellState.Alive)
+                                        aliveCloseCells++; // Om den lever, läg den på räknaren
                                 }
                             }
 
                         }
                     }
                     // Hämtar statet av cellen i mitten 
-                    CurrentCellState = CellCurentMatrix[Lists][Cells].GetState();
-                    
+                    currentCellState = cellCurentMatrix[lists][cells].GetState();
+
                     // Alla regler som påverkar cellen
-                    if (AliveCloseCells <= 1) // Ensam då dör den
-                        CellNextMatrix[Lists][Cells].SetState(Cell.CellState.Dead);
+                    if (aliveCloseCells <= 1) // Ensam då dör den
+                        cellNextMatrix[lists][cells].SetState(Cell.CellState.Dead);
 
                     // Om den ska fortsäta leva
-                    if (AliveCloseCells >= 2 && AliveCloseCells < 4 && CurrentCellState == Cell.CellState.Alive)
-                        CellNextMatrix[Lists][Cells].SetState(Cell.CellState.Alive);
+                    if (aliveCloseCells >= 2 && aliveCloseCells < 4 && currentCellState == Cell.CellState.Alive)
+                        cellNextMatrix[lists][cells].SetState(Cell.CellState.Alive);
 
                     // Dör om det är förmånga runt den
-                    if (AliveCloseCells >= 4)
-                        CellNextMatrix[Lists][Cells].SetState(Cell.CellState.Dead);
+                    if (aliveCloseCells >= 4)
+                        cellNextMatrix[lists][cells].SetState(Cell.CellState.Dead);
 
                     // Återuppstår om den är tre runt om den 
-                    if (AliveCloseCells == 3 && CurrentCellState == Cell.CellState.Dead)
-                        CellNextMatrix[Lists][Cells].SetState(Cell.CellState.Alive);
+                    if (aliveCloseCells == 3 && currentCellState == Cell.CellState.Dead)
+                        cellNextMatrix[lists][cells].SetState(Cell.CellState.Alive);
 
 
                 }

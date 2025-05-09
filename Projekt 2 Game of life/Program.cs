@@ -8,7 +8,7 @@ Raylib.InitWindow(800, 600, "Game Of Life");
 SC.Title = "My Game";
 
 Choice userInput; // enum för spellarens vall
-SimulationState state = SimulationState.None;; // enum om simulationen körs
+SimulationState state = SimulationState.None; ; // enum om simulationen körs
 Vector2 boardSizeY;
 Vector2 boardSizeX;
 Vector2 pressedPosition;
@@ -16,17 +16,17 @@ List<List<Cell>> curentCellMatrix = new List<List<Cell>>(); // Mina två dimetio
 List<List<Cell>> nextCellMatrix = new List<List<Cell>>();
 bool createOnce = true; // En engångsvariabel för att skappa Matrixarna en gång
 int columnCells = 0;
-int rowCells = 0; 
+int rowCells = 0;
 
 
 while (!Raylib.WindowShouldClose())
 {
     int overlineStartY = Raylib.GetScreenHeight() / 6; // Positionen för linijernas höjd
-    int underlineStartY = Raylib.GetScreenHeight() * 5 / 6;   
+    int underlineStartY = Raylib.GetScreenHeight() * 5 / 6;
     userInput = Choice.None;
 
-    userInput = Interface.Draw(out pressedPosition,userInput,overlineStartY,underlineStartY); // Ritar utt interfacet 
-    Interface.GetBoardDimentions(out boardSizeY, out boardSizeX,overlineStartY,underlineStartY);  // Hämtar ramens inskrivnings kordinater, beroende på de övre och undre linijerna.
+    userInput = Interface.Draw(out pressedPosition, userInput, overlineStartY, underlineStartY); // Ritar utt interfacet 
+    Interface.GetBoardDimentions(out boardSizeY, out boardSizeX, overlineStartY, underlineStartY);  // Hämtar ramens inskrivnings kordinater, beroende på de övre och undre linijerna.
 
     if (createOnce)
     { // Görs en gång
