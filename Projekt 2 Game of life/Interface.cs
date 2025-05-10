@@ -22,14 +22,14 @@ public class ButtonTemplate // Knapp mallen
     public int yStartPosition = 0;
     public string textContent = "Reminder if you forget to change this!!";
     public int fontSize = Raylib.GetScreenWidth() / 40;
-    Rectangle Rec;
+    Rectangle rec;
 
 
     public int Create() // Skappa knappen med text. Bakgrunden/Storleken i x led beräknas genom att ta karaktärerna
     {   // I strängen och muliplicera med storleken vilket blir jätte konstigt med långa ord och borde tänkas om.
         int recLenght = textContent.Length * fontSize * 3 / 4;
-        Rec = new Rectangle(xStartPosition, yStartPosition, recLenght, fontSize * 2);
-        Raylib.DrawRectangleRec(Rec, Color.Blue);
+        rec = new Rectangle(xStartPosition, yStartPosition, recLenght, fontSize * 2);
+        Raylib.DrawRectangleRec(rec, Color.Blue);
         Raylib.DrawText(textContent, xStartPosition + fontSize / 2, yStartPosition + fontSize / 2, fontSize, Color.Black);
         return recLenght;
     }
@@ -120,7 +120,7 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
     }
 
 
-    public static Choice PromptInstructionWindow(Choice userInput) // EN egen metod för att rita utt instruktions rutan.
+    public static void PromptInstructionWindow(Choice userInput) // EN egen metod för att rita utt instruktions rutan.
     {
         int windowHeight = Raylib.GetScreenHeight();
         int windowWidth = Raylib.GetScreenWidth();
@@ -135,8 +135,8 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
             Raylib.BeginDrawing(); // Rittar ut rutan med text och stäng knappen.
 
             Raylib.DrawRectangle(windowWidth / 16, windowHeight / 30, (windowWidth / 8) * 7, (windowHeight / 6) * 5, Color.LightGray);
-            Rectangle Rec2 = new Rectangle(windowWidth / 16, windowHeight / 30, (windowWidth / 8) * 7, (windowHeight / 6) * 5);
-            Raylib.DrawRectangleLinesEx(Rec2, 5, Color.Black);
+            Rectangle rec2 = new Rectangle(windowWidth / 16, windowHeight / 30, (windowWidth / 8) * 7, (windowHeight / 6) * 5);
+            Raylib.DrawRectangleLinesEx(rec2, 5, Color.Black);
             int lenghtCloseInstructionButton = CloseInstructionsButton.Create();
             Raylib.DrawText("Istructioner", (windowWidth / 40) * 4, (windowHeight / 60) * 4, windowWidth / 10, Color.White);
             Raylib.DrawText(veryLongtextContent, (windowWidth / 40) * 4, (windowHeight / 24) * 5, windowWidth / 40 + windowWidth / 100, Color.White);
@@ -156,7 +156,7 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
             }
 
         }
-        return userInput;
+       
     }
 
 
@@ -213,8 +213,8 @@ public class Interface // Hanterar vad som ska ritas utt på fönstret och anvä
             Raylib.BeginDrawing(); // Rittar ut rutan med användarens text/ userInput.
 
             Raylib.DrawRectangle(0, 0, windowWidth, windowHeight, Color.LightGray);
-            Rectangle Rec3 = new Rectangle(0, 0, windowWidth, windowHeight);
-            Raylib.DrawRectangleLinesEx(Rec3, 10, Color.Black);
+            Rectangle rec3 = new Rectangle(0, 0, windowWidth, windowHeight);
+            Raylib.DrawRectangleLinesEx(rec3, 10, Color.Black);
 
             Raylib.DrawText("Här kan du ändra stroleken på skärmen genom att \nskriva den storleken som du vill ha i x och y led! \nDet finns bara två restriktioner. 1. Formatet för din \ninput måste se utt på deta sätt tex orginal storleken \n'800x600' med ett x imellan bräden och höjden. \n2. Skärmstorlekn få inte överstiga 1000x1000 eller \nunderstiga 400x400 annars får jag problem. Du kan \nskriva genom att tryka på tangenterna och ta bort \nmed baksteg, för att sedan bekräfta/submita din \nstorlek tryker du på Enter! ", (windowWidth / 80) * 3, windowHeight / 6, (windowWidth / 200) * 7, Color.White);
             Raylib.DrawText("Skärm Storleks Ändraren", (windowWidth / 80) * 3, windowHeight / 20, (windowWidth / 160) * 11, Color.White);

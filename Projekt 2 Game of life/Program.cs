@@ -11,7 +11,8 @@ Choice userInput; // enum för spellarens vall
 SimulationState state = SimulationState.None; ; // enum om simulationen körs
 Vector2 boardSizeY;
 Vector2 boardSizeX;
-Vector2 pressedPosition;
+Vector2 pressedPosition; // Musens trykta position
+
 List<List<Cell>> curentCellMatrix = new List<List<Cell>>(); // Mina två dimetionela listor
 List<List<Cell>> nextCellMatrix = new List<List<Cell>>();
 bool createOnce = true; // En engångsvariabel för att skappa Matrixarna en gång
@@ -37,7 +38,7 @@ while (!Raylib.WindowShouldClose())
 
     Board.DrawMatrix(curentCellMatrix); // Rita utt Brädet/Matrixen
 
-    state = Game_Logic.EvaluateUserInput(state, userInput, pressedPosition, out createOnce, out userInput, curentCellMatrix, nextCellMatrix); // Utför beslutet som spellarn har fattat och returnar statet för simulationen.
+    state = Game_Logic.EvaluateUserInput(state, userInput, pressedPosition, out createOnce, curentCellMatrix, nextCellMatrix); // Utför beslutet som spellarn har fattat och returnar statet för simulationen.
     Simulation_Rules.Run(state, curentCellMatrix, nextCellMatrix, columnCells, rowCells); // Kör simulationen enligt statet och för in resultatet i nästa matrix.
 
     Board.UpdateMatrix(state, curentCellMatrix, nextCellMatrix, columnCells, rowCells); // För in nästa matrix i nuvarande, görs bara om simulationen körs.

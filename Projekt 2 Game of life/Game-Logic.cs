@@ -13,7 +13,7 @@ public enum SimulationState
 public class Game_Logic
 {
 
-    public static SimulationState EvaluateUserInput(SimulationState state, Choice userInput, Vector2 mousePressedPosition, out bool createOnce, out Choice newUserInput, List<List<Cell>> cellCurentMatrix, List<List<Cell>> cellNextMatrix)
+    public static SimulationState EvaluateUserInput(SimulationState state, Choice userInput, Vector2 mousePressedPosition, out bool createOnce, List<List<Cell>> cellCurentMatrix, List<List<Cell>> cellNextMatrix)
     { // tar in vart & vad användaren trök på och utför korisponderande resultat.
         createOnce = false;
         bool entetySizeRecalibration = false;
@@ -36,7 +36,7 @@ public class Game_Logic
                 ClearBoard(cellCurentMatrix); // Sätter alla celler till döda
                 break;
             case Choice.Instructions:
-                userInput = Interface.PromptInstructionWindow(userInput); // ritar upp ett fönster med instructioner.
+                Interface.PromptInstructionWindow(userInput); // ritar upp ett fönster med instructioner.
                 break;
             case Choice.AdjustWindowSize:
                 entetySizeRecalibration = Interface.PromptAjdustingWindow(entetySizeRecalibration);
@@ -46,7 +46,6 @@ public class Game_Logic
                 }
                 break;
         }
-        newUserInput = userInput;
         return state;
     }
 
